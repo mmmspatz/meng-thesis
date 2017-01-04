@@ -1,0 +1,70 @@
+%% Creator: Inkscape inkscape 0.91, www.inkscape.org
+%% PDF/EPS/PS + LaTeX output extension by Johan Engelen, 2010
+%% Accompanies image file 'loop_model.pdf' (pdf, eps, ps)
+%%
+%% To include the image in your LaTeX document, write
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics{<filename>.pdf}
+%% To scale the image, write
+%%   \def\svgwidth{<desired width>}
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics[width=<desired width>]{<filename>.pdf}
+%%
+%% Images with a different path to the parent latex file can
+%% be accessed with the `import' package (which may need to be
+%% installed) using
+%%   \usepackage{import}
+%% in the preamble, and then including the image with
+%%   \import{<path to file>}{<filename>.pdf_tex}
+%% Alternatively, one can specify
+%%   \graphicspath{{<path to file>/}}
+%% 
+%% For more information, please see info/svg-inkscape on CTAN:
+%%   http://tug.ctan.org/tex-archive/info/svg-inkscape
+%%
+\begingroup%
+  \makeatletter%
+  \providecommand\color[2][]{%
+    \errmessage{(Inkscape) Color is used for the text in Inkscape, but the package 'color.sty' is not loaded}%
+    \renewcommand\color[2][]{}%
+  }%
+  \providecommand\transparent[1]{%
+    \errmessage{(Inkscape) Transparency is used (non-zero) for the text in Inkscape, but the package 'transparent.sty' is not loaded}%
+    \renewcommand\transparent[1]{}%
+  }%
+  \providecommand\rotatebox[2]{#2}%
+  \ifx\svgwidth\undefined%
+    \setlength{\unitlength}{401.06323088bp}%
+    \ifx\svgscale\undefined%
+      \relax%
+    \else%
+      \setlength{\unitlength}{\unitlength * \real{\svgscale}}%
+    \fi%
+  \else%
+    \setlength{\unitlength}{\svgwidth}%
+  \fi%
+  \global\let\svgwidth\undefined%
+  \global\let\svgscale\undefined%
+  \makeatother%
+  \begin{picture}(1,0.31889617)%
+    \put(0.40803567,0.30184676){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{$L_{LOOP}$}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=1]{loop_model.pdf}}%
+    \put(0.44792415,0.18804341){\color[rgb]{0,0,0}\makebox(0,0)[rb]{\smash{$C_S$}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=2]{loop_model.pdf}}%
+    \put(0.40803019,0.15812294){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{$C_P$}}}%
+    \put(0.04898457,0.22793739){\color[rgb]{0,0,0}\rotatebox{59.99999989}{\makebox(0,0)[b]{\smash{$R_{Body}$\\ }}}}%
+    \put(0.31417384,0.18804891){\color[rgb]{0,0,0}\rotatebox{90}{\makebox(0,0)[b]{\smash{$R_{Body}$}}}}%
+    \put(0.22850738,0.23791088){\color[rgb]{0,0,0}\rotatebox{-59.99999989}{\makebox(0,0)[b]{\smash{$L_{Loop}$}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=3]{loop_model.pdf}}%
+    \put(0.44689466,0.07284346){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$C_M$}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=4]{loop_model.pdf}}%
+    \put(0.59704499,0.18216489){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$R_{Body}$}}}%
+    \put(0.53974698,0.28337534){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{C)}}}%
+    \put(0.30373807,0.28416736){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{B)}}}%
+    \put(0.02735261,0.28416736){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{A)}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=5]{loop_model.pdf}}%
+    \put(0.68728791,0.25785786){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{$Z_S=s L_{LOOP} - \frac{1}{s C_s}$}}}%
+  \end{picture}%
+\endgroup%

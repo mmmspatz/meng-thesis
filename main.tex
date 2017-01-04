@@ -27,6 +27,12 @@
 
 \documentclass[12pt,twoside]{mitthesis}
 \usepackage{lgrind}
+
+%% Packages not included in the template
+\usepackage{import}
+\usepackage{color}
+\usepackage{graphicx}
+
 %% These have been added at the request of the MIT Libraries, because
 %% some PDF conversions mess up the ligatures.  -LB, 1/22/2014
 \usepackage{cmap}
@@ -51,8 +57,7 @@ process all files:}
 % \include{signature}
 \pagestyle{plain}
 \include{contents}
-\include{chap1}
-\include{chap2}
+\include{loop_elements}
 \appendix
 \include{appa}
 \include{appb}
