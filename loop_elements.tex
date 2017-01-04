@@ -3,13 +3,25 @@
 \section{Loop Matching}
 \subsection{Loop Model}
 
-The series resnant loop antenna (LOOP FIGURE A) is constructed to have the highest possibles unloaded Q $Q_{UL}$). When the loop is placed in close proximity to a conductive object (such as a body part, a circuit board, or a neighboring loop), current flowing in the loop induces eddy currents in the conductive object. If the conductivity of the object is finite, then these eddy currents will deposit energy in the object, and the Q of the loop will be reduced.  This effect can be modelled by a series resistance RL in the loop circuit (LOOP FIGURE B). Assuming that external causes of loop loading dominate over wire and component resistances, the exact value of RL can be determined by measuring the Q of the loaded loop (RL=1/Q*sqrt(L/C).
+The series resnant loop antenna (Figure \ref{fig:loop_model} A) is constructed to have the highest possibles unloaded Q
+($Q_{UL}$). When the loop is placed in close proximity to a conductive object (such as a body part, a circuit board, or
+a neighboring loop), current flowing in the loop induces eddy currents in the conductive object. If the conductivity of
+the object is finite, then these eddy currents will deposit energy in the object, and the Q of the loop will be reduced.
+This effect can be modelled by a series resistance RL in the loop circuit (LOOP FIGURE B). Assuming that external causes
+of loop loading dominate over wire and component resistances, the exact value of RL can be determined by measuring the Q
+of the loaded loop ($R_=L\frac{\sqrt{\frac{L}{C}}}{Q}$).
 
-The Vendor supplied preamplifier is designed to achieve minimum noise figure when presented with a purely real 50 ohm load at its input. Therefore, a matching network is needed to transform 
+The Vendor supplied preamplifier is designed to achieve minimum noise figure when presented with a purely real 50 ohm
+load at its input. Therefore, a matching network is needed to transform 
 
 1. Resonant loop, CS CP
 
+\begin{figure}
+\vspace{2.4in}
 \import{figures/}{loop_model.pdf_tex}
+    \caption{A) Bare loop circuit model B) Loop model with output port C) impedance model}
+\label{fig:loop_model}
+\end{figure}
 
 \section{Description of micro-optimization}\label{ch1:opts}
 \subsection{Post Multiply Normalization}
