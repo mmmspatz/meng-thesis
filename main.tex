@@ -29,9 +29,12 @@
 \usepackage{lgrind}
 
 %% Packages not included in the template
+%% next three for using inkscape pdf+latex output
 \usepackage{import}
 \usepackage{color}
 \usepackage{graphicx}
+%% for chemistry formatting
+\usepackage{mhchem}
 
 %% These have been added at the request of the MIT Libraries, because
 %% some PDF conversions mess up the ligatures.  -LB, 1/22/2014
@@ -57,6 +60,9 @@
 % \include{signature}
 \pagestyle{plain}
 \include{contents}
+\include{introduction}
+\include{background}
+\include{methods}
 \include{loop_elements}
 \appendix
 \include{appa}
