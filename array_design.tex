@@ -4,21 +4,36 @@ The 22 week fetal array is designed to provide good surface area coverage and cl
 types at 22 weeks of pregnancy.  It consists of a rigid posterior panel that attaches directly to the patient table and
 a group of anterior and lateral panels that can be freely positioned on the patient. The two lateral panels are attached
 to the anterior panel with hinges to provide a degree of freedom. The patient facing surfaces of these panels are
-modelled after segmented images of a 22 weeks pregnant volunteer. The precise geometry of the hinged panel assembly was
+modeled after segmented images of a 22 weeks pregnant volunteer. The precise geometry of the hinged panel assembly was
 arrived at through iterative fit tests on pregnant volunteers.
   
 The coil formers and housings were designed in Rhinoceros (Robert McNeel \& Associates, WA, USA) and printed in
-polycarbonate on a (PRINTER MODEL NUMBER) (Stratasys, Ltd., MN, USA).
+poly carbonate on a (PRINTER MODEL NUMBER) (Stratasys, Ltd., MN, USA).
 
 \section{Array Construction}
 The array consists of four distinct groups of coil elements. The posterior panel contains 24 loops, each with a diameter
 of approximately 9cm. The anterior panel contains 20 loops, with a median loop diameter of 8cm and with several
-outliersin the non-hexagonally tiled area. The two anterior panels contain 10 7cm loops each. The loops in each panel
+outlier sin the non-hexagonally tiled area. The two anterior panels contain 10 7cm loops each. The loops in each panel
 are for the most part arranged in a hexagonal tiling pattern that allows each loop to be critically overlapped with all
 of its neighbors,  thus minimizing inductive coupling between neighboring loops [CITE ROEMER]. The loop layout is shown
 in detail in FIGURE.
 
 Individual loops were constructed from 16 gauge tin plated copper wire, with bridges bent into the wires to allow them
 to cross each other without touching. A schematic of the loop circuitry is shown in FIGURE. The following chapter
-contains a detailed explanaion of the function of the loop circuit The elements inside the dashed green region exist on
+contains a detailed explanation of the function of the loop circuit The elements inside the dashed green region exist on
 a small FR4 circuit board termed the “feed point board” 
+
+\section{Cable Traps}
+Precautions must be taken to prevent large currents from developing on internal and external wiring during RF
+transmit. Such uncontrolled currents could pose a fire/safety hazard, and at the very least would interfere with the
+sequence being run.  Common mode chokes spaced every 20cm prevent the induced currents from growing too large. Due to
+the high magnetic field the array operates in, ferrite chokes are not an option. Instead, resonantly tuned narrow band
+traps are constructed. Two types of traps were used in this array.
+
+\subsection{Helical Traps}
+The operation of the resonant helical trap (fig \cite{helical_trap}) is easy to understand.  The jacketed wire bundle is
+wound around a helical former, forming an air core inductor. High voltage capacitors are then connected across the turns
+of the inductor, forming a parallel LC tank. This kind of trap can withstand standing waves on the order of hundreds of
+volts, and has a high Q.
+
+\subsection{Bazooka Trap}
