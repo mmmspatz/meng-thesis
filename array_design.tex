@@ -26,14 +26,15 @@ a small FR4 circuit board termed the “feed point board”
 \section{Cable Traps}
 Precautions must be taken to prevent large currents from developing on internal and external wiring during RF
 transmit. Such uncontrolled currents could pose a fire/safety hazard, and at the very least would interfere with the
-sequence being run.  Common mode chokes spaced every 20cm prevent the induced currents from growing too large. Due to
+sequence being run. Common mode chokes spaced every 20cm prevent the induced currents from growing too large. Due to
 the high magnetic field the array operates in, ferrite chokes are not an option. Instead, resonantly tuned narrow band
 traps are constructed. Two types of traps were used in this array.
 
 \subsection{Helical Traps}
 The operation of the resonant helical trap (fig \cite{helical_trap}) is easy to understand.  The jacketed wire bundle is
 wound around a helical former, forming an air core inductor. High voltage capacitors are then connected across the turns
-of the inductor, forming a parallel LC tank. This kind of trap can withstand standing waves on the order of hundreds of
-volts, and has a high Q.
+of the inductor, forming a parallel LC tank. At resonance, the trap presents a high impedance to common mode currents flowing in the jacket. 
+This kind of trap can withstand standing waves on the order of hundreds of volts, and has high Q. It is used as the first cable trap inside each array panel, and inside the table plug.
 
 \subsection{Bazooka Trap}
+The bazooka trap can be thought of as a physically short bazooka balun that is electrically lengthened to $\frac{\lambda}{4}$ by the addition of series capacitors into the outermost conductor. An additional layer of copper shielding on the balun enclosure stabalizes the capacitance between the two ends of the 
