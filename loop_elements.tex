@@ -1,29 +1,55 @@
 \chapter{Loop Elements}
 
-\section{Loop Matching}
-\subsection{Loop Model}
+\section{Loop Model}
+The essence of the wire loop receive elements used in this array is a damped series resonant circuit, shown in figure
+\ref{fig:loop_model} A. The loop has a distributed inductance by nature of its geometry, and is broken at regular
+intervals by discrete capacitors.  Wire and component resistances and (more importantly) inductive coupling to adjacent
+conductive materials reduces the loop Q to a finite value. This effect is modelled by a series resistor with value
+$R_{LOAD}=\sqrt{\frac{L}{C}}\cdot\frac{1}{Q}$
 
-The series resnant loop antenna (Figure \ref{fig:loop_model} A) is constructed to have the highest possibles unloaded Q
-($Q_{UL}$). When the loop is placed in close proximity to a conductive object (such as a body part, a circuit board, or
-a neighboring loop), current flowing in the loop induces eddy currents in the conductive object. If the conductivity of
-the object is finite, then these eddy currents will deposit energy in the object, and the Q of the loop will be reduced.
-This effect can be modelled by a series resistance $R_L$ in the loop circuit (LOOP FIGURE B). Assuming that external causes
-of loop loading dominate over wire and component resistances, the exact value of RL can be determined by measuring the Q
-of the loaded loop ($R_=L\frac{\sqrt{\frac{L}{C}}}{Q}$).
+\section{Complete Loop Circuit}
+Figure \ref{fig:loop_model} B shows the creation of an output port in the loop circuit. The total loop capacitance is split into $C_P$, 
+across which the output port is formed, and $C_S$. A series capacitor $C_M$ is added to one terminal of the output port.
+For the purpose of further analisys, it is convenient to lump component impedances together into three blocks: $Z_P$ (parallel
+imedance), $Z_S$ (series impedance), and $Z_M$ (matching impedance). These impedances are defined in figure \ref{fig:loop_model} C.
 
-The Vendor supplied preamplifier is designed to achieve minimum noise figure when presented with a purely real 50 ohm
-load at its input. Therefore, a matching network is needed to transform 
+\section{Loop Circuit Analisys}
+The loop ciruit has an input inpedance of $Z_{IN}$ at its port, as defined in equation \ref{eq:Z_IN}. This impedance can
+be split into its real and imaginary parts, $R_{IN}$ and $X_{IN}$, shown in equations \ref{eq:R_IN} and \ref{eq:X_IN}.
 
-1. Resonant loop, CS CP
+\begin{equation} \label{eq:Z_IN}
+    Z_{IN}=(jX_p)\parallel(jX_S+R_{LOAD})+jX_M = \frac{j X_P (j X_S + R_L)}{j (X_P + X_S) + R_L} + j X_M
+\end{equation}
+
+\begin{equation} \label{eq:R_IN}
+    R_{IN}=Re(Z_{IN})=\frac{{X_P}^2 R_L}{{R_L}^2+(X_P+X_S)^2}
+\end{equation}
+
+\begin{equation} \label{eq:X_IN}
+    X_{IN}= Im(Z_{IN}) = \frac{X_P ({R_L}^2 + X_S(X_P+X_S))}{{R_L}^2+(X_P+X_S)^2}+X_M
+\end{equation}
+
+\section{Loop Component selection}
+\subsection{Loop Circuit Considerations}
+\subsubsection{Minimizing Preamp Noise Figure}
+The vendor supplied preamplifier is designed to achieve minimum noise figure when presented with a purely real 50 ohm 
+load at its input. Therefore, component values should be selected such that $R_{IN}=50\Omega$ and $X_{IN}=0\Omega$.
+\subsubsection{Preamp Decoupling}
+Preamp decoupling is typicall achieved by resonating a capacitor in the loop ($C_P$ in figure \ref{fig:loop_model}) with
+an inductor in series with one terminal of the output port (in the same position as $C_M$ in figure
+\ref{fig:loop_model}) through the input of the preamplifier. In our case, the inductance is integrated into the
+preamplifier itself. I measure the inductance of the preamplifer input to be roughly $130nH$ at $123.25 MHz$. The
+details of the preamp topology are unavailible to me. I simply consider it to have an impedance of $Z_{PREAMP}$, which
+is transformed to ${Z_{PREAMP}}'$ (as shown in equation \ref{eq:Z_PREAMP}) by the short length of coaxial cable
+connecting the preamp to the loop.
 
 
-\section{Description of micro-optimization}\label{ch1:opts}
-\subsection{Post Multiply Normalization}
-% This is an example of how you would use tgrind to include an example
-% of source code; it is commented out in this template since the code
-% example file does not exist.  To use it, you need to remove the '%' on the
-% beginning of the line, and insert your own information in the call.
-%
-%\tagrind[htbp]{code/pmn.s.tex}{Post Multiply Normalization}{opt:pmn}
-\subsection{Block Exponent}
-
+\begin{equation} \label{eq:Z_PREAMP}
+    {Z_{PREAMP}}'=Z_0 \cdot \frac{Z_{PREAMP}-j Z_0 \cdot \tan(2\pi\cdot\frac{L_{COAX}}{\lambda})}{Z_0 - j Z_{PREAMP} \cdot
+    \tan(2\pi\cdot\frac{L_{COAX}}{\lambda})}
+\end{equation}
+\begin{equation} \label{eq:X_PREAMP}
+    {X_{PREAMP}}'=Im({Z_{PREAMP}}')
+\end{equation}
+    
+In any case, preamp decoupling is achieved when $X_P+X_M+{X_{PREAMP}}'=0$
