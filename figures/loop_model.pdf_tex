@@ -36,7 +36,7 @@
   }%
   \providecommand\rotatebox[2]{#2}%
   \ifx\svgwidth\undefined%
-    \setlength{\unitlength}{401.06323088bp}%
+    \setlength{\unitlength}{475.60563375bp}%
     \ifx\svgscale\undefined%
       \relax%
     \else%
@@ -48,23 +48,30 @@
   \global\let\svgwidth\undefined%
   \global\let\svgscale\undefined%
   \makeatother%
-  \begin{picture}(1,0.31889617)%
-    \put(0.40803567,0.30184676){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{$L_{LOOP}$}}}%
+  \begin{picture}(1,0.26891508)%
+    \put(0.32103808,0.25453786){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{$L_{LOOP}$}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=1]{loop_model.pdf}}%
-    \put(0.44792415,0.18804341){\color[rgb]{0,0,0}\makebox(0,0)[rb]{\smash{$C_S$}}}%
+    \put(0.35467478,0.15857108){\color[rgb]{0,0,0}\makebox(0,0)[rb]{\smash{$C_S$}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=2]{loop_model.pdf}}%
-    \put(0.40803019,0.15812294){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{$C_P$}}}%
-    \put(0.04898457,0.22793739){\color[rgb]{0,0,0}\rotatebox{59.99999989}{\makebox(0,0)[b]{\smash{$R_{Body}$\\ }}}}%
-    \put(0.31417384,0.18804891){\color[rgb]{0,0,0}\rotatebox{90}{\makebox(0,0)[b]{\smash{$R_{Body}$}}}}%
-    \put(0.22850738,0.23791088){\color[rgb]{0,0,0}\rotatebox{-59.99999989}{\makebox(0,0)[b]{\smash{$L_{Loop}$}}}}%
+    \put(0.32103346,0.13334009){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{$C_P$}}}%
+    \put(0.04517466,0.19221241){\color[rgb]{0,0,0}\rotatebox{59.99999989}{\makebox(0,0)[b]{\smash{$R_{LOAD}$}}}}%
+    \put(0.24188735,0.15857571){\color[rgb]{0,0,0}\rotatebox{90}{\makebox(0,0)[b]{\smash{$R_{LOAD}$}}}}%
+    \put(0.19656058,0.20062274){\color[rgb]{0,0,0}\rotatebox{-59.99999989}{\makebox(0,0)[b]{\smash{$L_{LOOP}$}}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=3]{loop_model.pdf}}%
-    \put(0.44689466,0.07284346){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$C_M$}}}%
+    \put(0.35380664,0.06142659){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$C_M$}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=4]{loop_model.pdf}}%
-    \put(0.59704499,0.18216489){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$R_{Body}$}}}%
-    \put(0.53974698,0.28337534){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{C)}}}%
-    \put(0.30373807,0.28416736){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{B)}}}%
-    \put(0.02735261,0.28416736){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{A)}}}%
+    \put(0.49512727,0.13334009){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$R_{LOAD}$}}}%
+    \put(0.46902204,0.2258533){\color[rgb]{0,0,0}\makebox(0,0)[rb]{\smash{C)}}}%
+    \put(0.04517466,0.22585373){\color[rgb]{0,0,0}\makebox(0,0)[rb]{\smash{A)}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=5]{loop_model.pdf}}%
-    \put(0.68728791,0.25785786){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{$Z_S=s L_{LOOP} - \frac{1}{s C_s}$}}}%
+    \put(0.60866672,0.2174434){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{$Z_S=\omega L_{LOOP} - \frac{1}{s C_s}$}}}%
+    \put(0.7306165,0.12913493){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{$Z_P= \frac{-1}{\omega C_P}$}}}%
+    \put(0.26384322,0.22585373){\color[rgb]{0,0,0}\makebox(0,0)[rb]{\smash{B)}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=6]{loop_model.pdf}}%
+    \put(0.81051462,0.2174434){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{$Z_M= \frac{-1}{\omega C_M}$}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=7]{loop_model.pdf}}%
+    \put(0.92825923,0.12492976){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{}}}%
+    \put(0.95349022,0.1207246){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{$Z_{IN}$}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=8]{loop_model.pdf}}%
   \end{picture}%
 \endgroup%

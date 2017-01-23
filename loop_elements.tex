@@ -1,15 +1,11 @@
 \chapter{Loop Elements}
 
-\clearpage\newpage
 \begin{figure}
-    \vspace{2.5in}
     \centering
     \input{figures/loop_diagram.pdf_tex}
     \caption{Complete loop circuit schematic}
     \label{fig:loop_schematic}
-    \vspace{2.5in}
 \end{figure}
-
 
 \section{Loop Model}
 The essence of the wire loop receive elements used in this array is a damped series resonant circuit, shown in figure
@@ -25,9 +21,10 @@ For the purpose of further analisys, it is convenient to lump component impedanc
 imedance), $Z_S$ (series impedance), and $Z_M$ (matching impedance). These impedances are defined in figure \ref{fig:loop_model} C.
 
 \begin{figure}
-\input{figures/loop_model.pdf_tex}
-\caption{Loop circuit models}
-\label{fig:loop_model}
+    \centering
+    \input{figures/loop_model.pdf_tex}
+    \caption{Loop circuit models}
+    \label{fig:loop_model}
 \end{figure}
 
 \section{Loop Circuit Analisys}
@@ -48,8 +45,6 @@ be split into its real and imaginary parts, $R_{IN}$ and $X_{IN}$, shown in equa
 
 \section{Loop Component selection}
 
-
-
 \subsection{Loop Circuit Considerations}
 \subsubsection{Minimizing Preamp Noise Figure}
 The vendor supplied preamplifier is designed to achieve minimum noise figure when presented with a purely real 50 ohm 
@@ -62,7 +57,6 @@ preamplifier itself. I measure the inductance of the preamplifer input to be rou
 details of the preamp topology are unavailible to me. I simply consider it to have an impedance of $Z_{PREAMP}$, which
 is transformed to ${Z_{PREAMP}}'$ (as shown in equation \ref{eq:Z_PREAMP}) by the short length of coaxial cable
 connecting the preamp to the loop.
-
 
 \begin{equation} \label{eq:Z_PREAMP}
     {Z_{PREAMP}}'=Z_0 \cdot \frac{Z_{PREAMP}-j Z_0 \cdot \tan(2\pi\cdot\frac{L_{COAX}}{\lambda})}{Z_0 - j Z_{PREAMP} \cdot
