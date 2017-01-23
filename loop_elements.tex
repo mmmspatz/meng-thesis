@@ -1,5 +1,16 @@
 \chapter{Loop Elements}
 
+\clearpage\newpage
+\begin{figure}
+    \vspace{2.5in}
+    \centering
+    \input{figures/loop_diagram.pdf_tex}
+    \caption{Complete loop circuit schematic}
+    \label{fig:loop_schematic}
+    \vspace{2.5in}
+\end{figure}
+
+
 \section{Loop Model}
 The essence of the wire loop receive elements used in this array is a damped series resonant circuit, shown in figure
 \ref{fig:loop_model} A. The loop has a distributed inductance by nature of its geometry, and is broken at regular
@@ -12,6 +23,12 @@ Figure \ref{fig:loop_model} B shows the creation of an output port in the loop c
 across which the output port is formed, and $C_S$. A series capacitor $C_M$ is added to one terminal of the output port.
 For the purpose of further analisys, it is convenient to lump component impedances together into three blocks: $Z_P$ (parallel
 imedance), $Z_S$ (series impedance), and $Z_M$ (matching impedance). These impedances are defined in figure \ref{fig:loop_model} C.
+
+\begin{figure}
+\input{figures/loop_model.pdf_tex}
+\caption{Loop circuit models}
+\label{fig:loop_model}
+\end{figure}
 
 \section{Loop Circuit Analisys}
 The loop ciruit has an input inpedance of $Z_{IN}$ at its port, as defined in equation \ref{eq:Z_IN}. This impedance can
@@ -30,6 +47,9 @@ be split into its real and imaginary parts, $R_{IN}$ and $X_{IN}$, shown in equa
 \end{equation}
 
 \section{Loop Component selection}
+
+
+
 \subsection{Loop Circuit Considerations}
 \subsubsection{Minimizing Preamp Noise Figure}
 The vendor supplied preamplifier is designed to achieve minimum noise figure when presented with a purely real 50 ohm 
@@ -53,3 +73,30 @@ connecting the preamp to the loop.
 \end{equation}
     
 In any case, preamp decoupling is achieved when $X_P+X_M+{X_{PREAMP}}'=0$
+
+\subsection{Loop Resonance}
+I define loop resonance as occuring at a frequency $\omega_0$ where $X_P + X_S = 0$. In this case, the equations for $R_{IN}$ and $X_{IN}$ simplify to
+equations \ref{eq:R_IN_RES} and \ref{eq:X_IN_RES} respectively. It can easily be seen how $X_P$ could be selected to set
+$R_{IN}$ to $50\Omega$ at resonance, but it then becomes impossible to set $X_{IN}$ to $0\Omega$ and also achieve preamp decoupling.
+
+\subsection{Off resonance behavior}
+It is not necessary that the loop be tuned to resonate precisely at the frequency of interest. The position of
+$\omega_0$ relative to that of the Lamor frequency $\omega_L$ is another variable that we can manipulate to achieve the
+desired loop circuit characteristics.
+
+Consid
+
+
+\begin{equation} \label{eq:R_IN_RES}
+    R_{IN}\big|_{\omega_0}=\frac{{X_P}^2}{R_L} = \frac{{X_S}^2}{R_L} 
+\end{equation}
+
+\begin{equation} \label{eq:X_IN_RES}
+    X_{IN}\big|_{\omega_0}=X_P+X_M=-X_S+X_M
+\end{equation}
+
+\begin{figure}
+    \includegraphics[width=6in]{figures/impedance_plot.pdf}
+    \caption{Loop impedances vs. frequency with optimal component values}
+    \label{fig:impedance_plot}
+\end{figure}
