@@ -1,5 +1,28 @@
 \chapter{Loop Elements}
 
+The same basic loop circuit, shown in figure \ref{fig:loop_schematic}, is duplicated 64 times to create the full array.
+Here, I will discuss the purpose and function of each part of this circuit.
+
+\section{Active Detuning}
+The loop is a resonant circuit that is strongly coupled to the volume surrounding it. It is necessary to spoil this
+resonance during the high power RF transmit pulses so that excessive currents are not induced in the loop. Such
+unintended energy deposition could adversely affect transmit homogenaity, damage the array, or create a safety hazard.
+This selective detuning is acheived by switching an inductor across one of the loop capacitors, creating a parallel
+resonant tank that behaves as an open circuit in the loop at $\omega_L$.
+
+A DC bias current of about $120mA$ is injected on the line marked BIAS in figure \ref{fig:loop_schematic}. This bias
+current flows through a PIN diode, $D_1$, creating an RF short and effectively switching $L_{TRAP}$ across $C_{S3}$.
+$L_{TRAP}$ is an adjustable air core inductor, and is hand tuned to resonate with $C_{S3}$ at precisely $\omega_L$. The 
+parallel resonant circuit thus formed creates a virtual open ciruit in the loop, preventing current from flowing. As 
+soon as the bias current is removed and the diode recovers, the trap is disabled and the loop once again becomes tuned.
+
+\section{Passive Detuning}
+The active detuning strategy is sufficient for assurance of image quality and protection from hardware damage, but a
+passive method is required to ensure patient safety in the event of an electrical failure. The crossed diode pair $D_2$
+clamps the voltage across $C_{S3}$ and $L_{TRAP}$ to safe levels, passively enabling the trap if the energy stored in
+the loop gets too high. Other designs might also include RF fuses in the loop circuit, but the loops employed in this
+array are all small enough that this was not necesarry.
+
 \begin{figure}
     \centering
     \input{figures/loop_diagram.pdf_tex}
