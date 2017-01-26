@@ -37,12 +37,14 @@ intervals by discrete capacitors.  Wire and component resistances and (more impo
 conductive materials reduces the loop Q to a finite value. This effect is modelled by a series resistor with value
 $R_{LOAD}=\sqrt{\frac{L}{C}}\cdot\frac{1}{Q}$
 
-\section{Complete Loop Circuit}
+\section{Loop Circuit Output port}
 Figure \ref{fig:loop_model} B shows the creation of an output port in the loop circuit. The total loop capacitance is
 split into $C_P$, across which the output port is formed, and $C_S$. A series capacitor $C_M$ is added to one terminal
-of the output port.  For the purpose of further analisys, it is convenient to lump component impedances together into
-three blocks: $Z_P$ (parallel imedance), $Z_S$ (series impedance), and $Z_M$ (matching impedance). These impedances are
-defined in figure \ref{fig:loop_model} C.
+of the output port.
+
+%For the purpose of further analisys, it is convenient to lump component impedances together into
+%#three blocks: $Z_P$ (parallel imedance), $Z_S$ (series impedance), and $Z_M$ (matching impedance). These impedances are
+%#defined in figure \ref{fig:loop_model} C.
 
 \begin{figure}
     \centering
@@ -56,11 +58,13 @@ The loop ciruit has an input inpedance of $Z_{IN}$ at its port, as defined in eq
 be split into its real and imaginary parts, $R_{IN}$ and $X_{IN}$, shown in equations \ref{eq:R_IN} and \ref{eq:X_IN}.
 
 \begin{equation} \label{eq:Z_IN}
-    Z_{IN}=(jX_p)\parallel(jX_S+R_{LOAD})+jX_M = \frac{j X_P (j X_S + R_L)}{j (X_P + X_S) + R_L} + j X_M
+    Z_{IN}=(jX_p)\parallel(jX_S+R_{L})+jX_M = \frac{1}{j\omega \cdot C_P + \frac{1}{R_{L}+j\omega\cdot L_{L} +
+    \frac{1}{j\omega \cdot C_S}}} + \frac{1}{j\omega\cdot C_M}
 \end{equation}
 
 \begin{equation} \label{eq:R_IN}
-    R_{IN}=Re(Z_{IN})=\frac{{X_P}^2 R_L}{{R_L}^2+(X_P+X_S)^2}
+    R_{IN}=\frac{{C_S}^2 R_{L}}{{C_P}^2 {C_S}^2 {L_{LOOP}}^2 \omega^4 + {C_P}^2 {C_S}^2 {R_{L}}^2
+    \omega^2 - 2 {C_P}^2 C_S L_{L} \omega^2 + {C_P}^2 - 2 C_P {C_S}^2 L_{L} \omega^2 + 2 C_P C_S + {C_S}^2}
 \end{equation}
 
 \begin{equation} \label{eq:X_IN}
@@ -162,9 +166,6 @@ $$
 $$
 
 \subsection{Optimal Component values}
-
-\begin{equation}\label{eq:optimal_impedances}
-    \begin{align}
 
 
 
