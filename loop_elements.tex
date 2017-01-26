@@ -38,10 +38,11 @@ conductive materials reduces the loop Q to a finite value. This effect is modell
 $R_{LOAD}=\sqrt{\frac{L}{C}}\cdot\frac{1}{Q}$
 
 \section{Complete Loop Circuit}
-Figure \ref{fig:loop_model} B shows the creation of an output port in the loop circuit. The total loop capacitance is split into $C_P$, 
-across which the output port is formed, and $C_S$. A series capacitor $C_M$ is added to one terminal of the output port.
-For the purpose of further analisys, it is convenient to lump component impedances together into three blocks: $Z_P$ (parallel
-imedance), $Z_S$ (series impedance), and $Z_M$ (matching impedance). These impedances are defined in figure \ref{fig:loop_model} C.
+Figure \ref{fig:loop_model} B shows the creation of an output port in the loop circuit. The total loop capacitance is
+split into $C_P$, across which the output port is formed, and $C_S$. A series capacitor $C_M$ is added to one terminal
+of the output port.  For the purpose of further analisys, it is convenient to lump component impedances together into
+three blocks: $Z_P$ (parallel imedance), $Z_S$ (series impedance), and $Z_M$ (matching impedance). These impedances are
+defined in figure \ref{fig:loop_model} C.
 
 \begin{figure}
     \centering
@@ -70,50 +71,106 @@ be split into its real and imaginary parts, $R_{IN}$ and $X_{IN}$, shown in equa
 
 \subsection{Loop Circuit Considerations}
 \subsubsection{Minimizing Preamp Noise Figure}
-The vendor supplied preamplifier is designed to achieve minimum noise figure when presented with a purely real 50 ohm 
-load at its input. Therefore, component values should be selected such that $R_{IN}=50\Omega$ and $X_{IN}=0\Omega$.
+The vendor supplied preamplifier is designed to achieve minimum noise figure when presented with a purely real
+$50\Omega$ load at its input. Therefore, component values should be selected such that $R_{IN}=50\Omega$ and
+$X_{IN}=0\Omega$. Call this optimal input impedance $Z_{IN_{OPT}}$.
+
 \subsubsection{Preamp Decoupling}
 Preamp decoupling is typicall achieved by resonating a capacitor in the loop ($C_P$ in figure \ref{fig:loop_model}) with
 an inductor in series with one terminal of the output port (in the same position as $C_M$ in figure
-\ref{fig:loop_model}) through the input of the preamplifier. In our case, the inductance is integrated into the
+\ref{fig:loop_model}) through the input of the preamplifier. In our case, however, the inductance is integrated into the
 preamplifier itself. I measure the inductance of the preamplifer input to be roughly $130nH$ at $123.25 MHz$. The
-details of the preamp topology are unavailible to me. I simply consider it to have an impedance of $Z_{PREAMP}$, which
-is transformed to ${Z_{PREAMP}}'$ (as shown in equation \ref{eq:Z_PREAMP}) by the short length of coaxial cable
-connecting the preamp to the loop.
+details of the preamp topology are unavailible to me. I simply consider it to have an impedance of $Z_P$, which
+is transformed to ${Z_P}'$ (as shown in equation \ref{eq:Z_PREAMP}) by the short length of coaxial cable (with
+characteristic impeance $Z_0$) connecting the preamp to the loop.
 
 \begin{equation} \label{eq:Z_PREAMP}
-    {Z_{PREAMP}}'=Z_0 \cdot \frac{Z_{PREAMP}-j Z_0 \cdot \tan(2\pi\cdot\frac{L_{COAX}}{\lambda})}{Z_0 - j Z_{PREAMP} \cdot
+    {Z_P}'=Z_0 \cdot \frac{Z_P-j Z_0 \cdot \tan(2\pi\cdot\frac{L_{COAX}}{\lambda})}{Z_0 - j Z_P \cdot
     \tan(2\pi\cdot\frac{L_{COAX}}{\lambda})}
 \end{equation}
+
 \begin{equation} \label{eq:X_PREAMP}
-    {X_{PREAMP}}'=Im({Z_{PREAMP}}')
+    {X_P}'=Im({Z_P}')
 \end{equation}
     
-In any case, preamp decoupling is achieved when $X_P+X_M+{X_{PREAMP}}'=0$
+In any case, preamp decoupling is achieved when $C_P$, $C_M$, and the transformed preamp input impedance resonate
+together, as defined in equation \ref{eq:preamp_decoupling_condition}.
+
+\begin{equation} \label{eq:preamp_decoupling_condition}
+    X_P + X_M +{X_P}' = 0
+\end{equation}
+
 
 \subsection{Loop Resonance}
-I define loop resonance as occuring at a frequency $\omega_0$ where $X_P + X_S = 0$. In this case, the equations for $R_{IN}$ and $X_{IN}$ simplify to
-equations \ref{eq:R_IN_RES} and \ref{eq:X_IN_RES} respectively. It can easily be seen how $X_P$ could be selected to set
-$R_{IN}$ to $50\Omega$ at resonance, but it then becomes impossible to set $X_{IN}$ to $0\Omega$ and also achieve preamp decoupling.
+
+I define loop resonance as occuring at a frequency $\omega_0$ where $X_P + X_S = 0$. In this case, the equations for
+$R_{IN}$ and $X_{IN}$ simplify to equations \ref{eq:R_IN_RES} and \ref{eq:X_IN_RES} respectively. Rearranging equation
+\ref{eq:R_IN_RES} into equation \ref{eq:X_P_RIN} gives a formula for setting the value of $R_IN$ on resonance; however,
+it is then impossible to select $X_M$ to simultaneously achieve zero $X_{IN}$ and satisfy the preamp decoupling conditon
+(equation \ref{eq:preamp_decoupling_condition})
+
+
+\begin{equation} \label{eq:R_IN_RES}
+    R_{IN}\big|_{\omega=\omega_0}=\frac{{X_P}^2}{R_L} = \frac{{X_S}^2}{R_L} 
+\end{equation}
+
+\begin{equation} \label{eq:X_IN_RES}
+    X_{IN}\big|_{\omega=\omega_0}=X_P+X_M=-X_S+X_M
+\end{equation}
+
+\begin{equation} \label{eq:X_P_RIN}
+    X_{P}(R_{IN})\big|_{\omega=\omega_0}=-\sqrt{R_{LOAD} \cdot R_{IN}} 
+\end{equation}
 
 \subsection{Off resonance behavior}
 It is not necessary that the loop be tuned to resonate precisely at the frequency of interest. The position of
 $\omega_0$ relative to that of the Lamor frequency $\omega_L$ is another variable that we can manipulate to achieve the
 desired loop circuit characteristics.
 
-Consid
+\subsubsection{Choosing $X_P$}
+Consider choosing $X_P=-\sqrt{\alpha\ \cdot Z_{OPT} \cdot R_{LOAD}}$, so that the value of $R_{IN}$ on resonance is a
+factor of $\alpha$ larger than $Z_{OPT}$. Substituting this value into eq. \ref{eq:R_IN}, we get a new equation for
+$R_{IN}$: eq. \ref{eq:R_IN_alpha}. The frequency dependent value of $R_{IN}$ is plotted in figure
+\ref{fig:impedance_plot}
 
-
-\begin{equation} \label{eq:R_IN_RES}
-    R_{IN}\big|_{\omega_0}=\frac{{X_P}^2}{R_L} = \frac{{X_S}^2}{R_L} 
+\begin{equation} \label{eq:R_IN_alpha}
+    R_{IN}\big|_{X_P=-\sqrt{\alpha Z_{OPT} R_{LOAD}}} = \frac{\alpha Z_{OPT} {R_{LOAD}}^2}{{R_L}^2 + \alpha Z_{OPT} R_{LOAD} - 2\sqrt{\alpha Z_{OPT} R_{LOAD}} X_S + {X_S}^2}
 \end{equation}
 
-\begin{equation} \label{eq:X_IN_RES}
-    X_{IN}\big|_{\omega_0}=X_P+X_M=-X_S+X_M
-\end{equation}
+\subsubsection{Choosing $X_S$}
+Indeed, when $X_P=-\sqrt{\alpha Z_{OPT} R_{LOAD}}$ and $X_S=\sqrt{\alpha Z_{OPT} R_{LOAD}}$, eq.  \ref{eq:R_IN_alpha}
+reduces to $R_{IN} = \alpha \cdot Z_{OPT}$.  But on either side of this resonant peak, there is a single frequency at
+which $R_{IN} = Z_{OPT}$. Solving \ref{eq:R_IN_alpha} for the two values of $X_S$ at which this occurs, we get: $$X_S =
+\sqrt{\alpha Z_{OPT} R_{LOAD}} \pm R_{LOAD} \sqrt{\alpha - 1}$$ We choose the minus sign in this expression, and thus
+achieve $R_{IN} = Z_{OPT}$ at a frequency below $\omega_0$, because this makes the sytem of equations in the next step
+solvable.
+
+\subsubsection{Choosing $\alpha$ and $X_M$}
+The only remaining free parameters are $\alpha$ and $X_M$.  They must be chosen to achieve purely real input inpedance
+($X_{IN} = 0$) and preamp decoupling ($X_P + X_M +{X_P}' = 0$). Plugging in the values of $X_P$ and $X_S$ that we've
+selected so far into these two requirements, we get a system of equations with a singe set of solutions:
+$$
+\begin{aligned}
+    Z_{OPT} \sqrt{\alpha - 1} - \sqrt{\alpha Z_{OPT} R_{LOAD}} + X_M &= 0\\
+    -\sqrt{\alpha Z_{OPT}} + X_M + {X_P}' &= 0
+\end{aligned}
+\implies
+\begin{aligned}
+    \alpha &= 1 + \frac{{X_P}'^2}{Z_{OPT}}\\
+    X_M &= \sqrt{\frac{R_{LOAD}}{Z_{OPT}} ({X_P}'^2 + {Z_{OPT}}^2} - {X_P}'
+\end{aligned}
+$$
+
+\subsection{Optimal Component values}
+
+\begin{equation}\label{eq:optimal_impedances}
+    \begin{align}
+
+
 
 \begin{figure}
-    \includegraphics[width=6in]{figures/impedance_plot.pdf}
+    \centering
+    \input{figures/impedance_plot.pdf_tex}
     \caption{Loop impedances vs. frequency with optimal component values}
     \label{fig:impedance_plot}
 \end{figure}
