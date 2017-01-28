@@ -17,15 +17,15 @@ Generating SNR maps for multi coil arrays is less straigtforward, and depends on
 indidiual elements. The Roemer paper \cite{Roemer90} describes an optimal way of combining array coil data in the
 spatial domain that results in maximum SNR and normalized noise intensity in every voxel of the resulting image.  First,
 a complete image is acquired and reconstructed from every element in the array. Next, a sample of pure noise data is
-acquired to generate a channel noise correlation matirx $\Psi$, of which a single element $Psi_{ij}$ is the noise
-correlation coefficient between receivers $i$ and $j$. Next, the individual coil images are combined on a voxel by voxel
-basis. For a single voxel, arrange the values $S_i$ of that voxel in each of the indivudual coil images in a vector $S$.
-Similarly, arrange the sensitivities of each coil to the voxel under consideration in a vector $C$.The matrix equation
-for the voxel intensity in the optimal SNR uniform noise image is then \ref{eq:I_OPT}. If the individual coil images
-have sufficiently high SNR, then $S$ serves as a good approximation of $C$, and equation simplifies to \ref{eq:I_COV}.
-If it is assumed that there is no noise correlation between distinct channels, $\Psi$ becomes the identity matrix, and
-the optimal SNR formula simplifies to \ref{eq:I_RSOS}. This is equivilent to summing the squared magnitudes of the
-uncombined images, then taking the square root of the result.
+acquired to generate a channel noise covariance matirx $\Psi$, of which a single element $Psi_{ij}$ is the noise
+covariance between receivers $i$ and $j$. Next, the individual coil images are combined on a voxel by voxel basis. For a
+single voxel, arrange the values $S_i$ of that voxel in each of the indivudual coil images in a vector $S$.  Similarly,
+arrange the sensitivities of each coil to the voxel under consideration in a vector $C$.The matrix equation for the
+voxel intensity in the optimal SNR uniform noise image is then \ref{eq:I_OPT}. If the individual coil images have
+sufficiently high SNR, then $S$ serves as a good approximation of $C$, and equation simplifies to \ref{eq:I_COV}.  If it
+is assumed that there is no noise correlation between distinct channels and that all channels are identically loaded,
+$\Psi$ becomes proportional to the identity matrix, and the optimal SNR formula simplifies to \ref{eq:I_RSOS}. This is
+equivilent to summing the squared magnitudes of the uncombined images, then taking the square root of the result.
 
 \begin{equation} \label{eq:I_OPT}
 I_{OPT}=\frac{C^H\Psi^{-1}S}{\sqrt{C^H\Psi^{-1}C}}
@@ -42,3 +42,90 @@ I_{RSOS}=\sqrt{S^{H} S}
 TODO:SNR equations
 
 \section{SENSE Geometry Factor}
+
+\subsection{k-space sampling for the 2DFT}
+The basic Fourie abstraction used in traditional 2D MRI with cartesian k-space sampling illuminates a fundemental
+constraint on imaging speed: k-space traversal speed.
+
+\subsubsection{Sampling Constraints}
+The spatial extents of an image dictate the spectral spacing of samples that must be aquired to encode it with the DFT.
+\cite{nishimura} .In order to 2D Fourie encode an image of width $FOV_x$ and height $FOV_y$, k-space samples must be
+spaced $\frac{1}{FOV_X}$ apart in the $k_x$ direction and $\frac{1}{FOV_Y}$ apart in the $k_y$, direction, as defined in
+eq. \ref{eq:fov}.
+
+\begin{equation}\label{eq:fov}
+    \begin{aligned}
+        FOV_x z &= \frac{1}{\delta k_x}\\
+        FOV_y &= \frac{1}{\delta k_y}
+    \end{aligned}
+\end{equation}
+
+The spatial resolution of an image dictates the extents of spectral data that must be acquired to encode it with the
+DFT. In order to 2D Fourie encode an image with voxels $\delta_x$ wide and $\delta_y$ tall, data must be sampled over a
+period of approximately $\frac{1}{\delta_x}$ in the $k_x$ direction and $\frac{1}{\delta_x}$ in the $k_x$ direction, as
+defined in eq. \ref{eq:spatial_resolution}.
+
+
+\begin{equation}\label{eq:spatial_resolution}
+    \begin{aligned}
+        \delta_x &\approx \frac{1}{2k_{xmax}}\\
+        \delta_y &\approx \frac{1}{2k_{ymax}}
+    \end{aligned}
+\end{equation}
+
+It is clear that the number k-space samples needed to resolve an image grows linearly with both FOV and voxel
+density, and that the maxium extents of those samples in k-space increases linearly with voxel density. K-space is
+sampled by traversing a continuous path that sequentially visits the coordinates of each sample. The maximum speed of
+k-space traversal is fundementally limited by patient saftey considerations and technological limitations.
+limitation. So, for a given maximum spead and optimum path, there is a minimum acquisition time for a fully sampled
+2DFT sequence with a given FOV and spatial resolution.
+
+\subsubsection{Cartesian Undersampling}
+An imaging sequence can be accelerated by skipping some points in k-space, then attempting by some means to reconstruct
+a complete image from incomplete k-space data. In the case of cartesian sampling for the 2DFT, a natural strategy is to
+regularly skip entire lines of k-space data in one dimension.\cite{Pruessmann1999}, for example acquiring every other
+line (R=2) or every third line (R=3). The effect of this regular undersampling strategy is to effectively increase
+$\delta k$ by a factor of R, and to accordingly decrease $FOV$ by the same factor of R. This causes parts of the object
+being imaged that lie outside of the reduced FOV to wrap around the edges of that FOV and alias onto other voxel
+positions.
+
+\subsubsection{SENSE}
+The Pruessmann paper \cite{Pruessmann1999} introduced the strategy of "Sensitivity Encoding" as a means of undoing the
+aliasing induced by undersampling. In an array coil, different receive elements have different spatial sensitivity
+profiles. These varying sensitivities provide different "views" of the same aliased image, and this extra information is
+used to unfold the aliased image on a pixel by pixel basis.
+
+Consider an array with $n_C$ individual elemts, each with a unique view of a voxel location that, in the reduced FOV
+image, represents a superposition of $n_P$ physical voxel locations. A sensitivity matrix $S$ is constructed to describe
+the sensitivity of each receive element to each of the voxel positions that are aliased into a single pixel in the final
+image. An individual element $S_{\gamma,\rho}$ in this matrix represents the sensitivity of receive elemnt number
+$\gamma$ to superimposed pixel $\rho$. The values of the voxel in the reduced FOV images from each recieve element are
+arranged in a vector of length $n_C$: $\vec{a}$. Similar to in the previous section, a $n_C \times n_C$ receiver noise covariance
+matirx. The unfolding matrix is then $U$ (eq. \ref{eq:unfolding}), and the the vector of image values in the $n_p$
+voxels of the unaliased image the are estimated by $\vec{v} = U\vec{a}$. This unfolding process is repeated for every
+voxel in the reduced FOV image.
+
+\begin{equation}\label{eq:unfolding}
+    U = (S^H\Psi^{-1}S)^{-1}S^H\Psi^{-1}
+\end{equation}
+
+\subsubsection{SENSE g-factor}
+By accelerating an image acquisition by a factor of $R$, we expect that the SNR of the resulting image must
+coorespondingly decrease by a factor of $\frac{1}{\sqrt{R}}$ \cite{nishimura}. Usually, though, imperfect conditioning
+of the sensitivity matrix results in a a steeper SNR penalty. The extent to which SENSE underperforms the best case SNR
+penalty is characterized by the geometry factor, or g-factor, defined in eq. \ref{eq:SENSE_g}. The g-factor varies as a
+function of space, and is defined for each voxel in the full FOV image. It is called the geometry factor because it
+depends largely on the geometry of the receieve array. With more inependent views of an aliasd pixel are availible, a
+higher acceleration factor can be attempted without poor conditioning amplifying noise to an unacceptable degree.
+
+\begin{equation}\label{eq:SENSE_g}
+    g_{SENSE} = \frac{1}{\sqrt{R}} \cdot \frac{SNR_{FULL}}{SNR_{ACCEL}}
+\end{equation}
+
+Plots of 2D SENSE g-factor maps in a given slice are a useful graphical tool for assessing the abilty of an array to support
+a given acceleration factor along a particular dimension (or, along two dimensions simultaneously.) SENSE g-factor is
+widely used to compare the acceleration capability of different coil arrays because it is straightforward to compute and
+gives insights into the fundemental ability of an array to enable acceleration using any method. Still, it is important
+to note that unique formulations of g-factor have developed for other acceleration methods, such as SMASH and GRAPPA \cite{Breuer2009}.
+
+
