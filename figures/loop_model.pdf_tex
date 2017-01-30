@@ -64,13 +64,12 @@
     \put(0.46902204,0.2258533){\color[rgb]{0,0,0}\makebox(0,0)[rb]{\smash{C)}}}%
     \put(0.04517466,0.22585373){\color[rgb]{0,0,0}\makebox(0,0)[rb]{\smash{A)}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=5]{loop_model.pdf}}%
-    \put(0.60866672,0.2174434){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{$Z_S=\omega L_{LOOP} - \frac{1}{s C_s}$}}}%
+    \put(0.60866672,0.2174434){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{$Z_S=\omega L_{LOOP} - \frac{1}{\omega C_s}$}}}%
     \put(0.7306165,0.12913493){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{$Z_P= \frac{-1}{\omega C_P}$}}}%
     \put(0.26384322,0.22585373){\color[rgb]{0,0,0}\makebox(0,0)[rb]{\smash{B)}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=6]{loop_model.pdf}}%
     \put(0.81051462,0.2174434){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{$Z_M= \frac{-1}{\omega C_M}$}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=7]{loop_model.pdf}}%
-    \put(0.92825923,0.12492976){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{}}}%
     \put(0.95349022,0.1207246){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{$Z_{IN}$}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=8]{loop_model.pdf}}%
   \end{picture}%

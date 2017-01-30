@@ -37,14 +37,12 @@ intervals by discrete capacitors.  Wire and component resistances and (more impo
 conductive materials reduces the loop Q to a finite value. This effect is modelled by a series resistor with value
 $R_{LOAD}=\sqrt{\frac{L}{C}}\cdot\frac{1}{Q}$
 
-\section{Loop Circuit Output port}
+\section{Complete Loop Circuit}
 Figure \ref{fig:loop_model} B shows the creation of an output port in the loop circuit. The total loop capacitance is
 split into $C_P$, across which the output port is formed, and $C_S$. A series capacitor $C_M$ is added to one terminal
-of the output port.
-
-%For the purpose of further analisys, it is convenient to lump component impedances together into
-%#three blocks: $Z_P$ (parallel imedance), $Z_S$ (series impedance), and $Z_M$ (matching impedance). These impedances are
-%#defined in figure \ref{fig:loop_model} C.
+of the output port. In some parts of the the following analisys, grouping components values into the block impedances
+defined in eq. \ref{eq:block_impedances} and fig. \ref{fig:loop_model} C results in clearer and more compact
+expressions, so I have made that substitution.
 
 \begin{figure}
     \centering
@@ -53,22 +51,32 @@ of the output port.
     \label{fig:loop_model}
 \end{figure}
 
+\begin{equation}\label{eq:block_impedances}
+    \begin{aligned}
+        X_S(\omega) &= \omega L_{LOOP} - \frac{1}{\omega C_S}\\
+        X_P(\omega) &= \frac{-1}{\omega C_P}\\
+        X_M(\omega) &= \frac{-1}{\omega C_M}\\
+    \end{aligned}
+\end{equation}
+
 \section{Loop Circuit Analisys}
 The loop ciruit has an input inpedance of $Z_{IN}$ at its port, as defined in equation \ref{eq:Z_IN}. This impedance can
 be split into its real and imaginary parts, $R_{IN}$ and $X_{IN}$, shown in equations \ref{eq:R_IN} and \ref{eq:X_IN}.
 
 \begin{equation} \label{eq:Z_IN}
-    Z_{IN}=(jX_p)\parallel(jX_S+R_{L})+jX_M = \frac{1}{j\omega \cdot C_P + \frac{1}{R_{L}+j\omega\cdot L_{L} +
-    \frac{1}{j\omega \cdot C_S}}} + \frac{1}{j\omega\cdot C_M}
+    \begin{aligned}
+        Z_{IN}&=(jX_p(\omega))\parallel(jX_S(\omega)+R_{LOAD})+jX_M(\omega)\\
+        &= \frac{j X_P(\omega) (j X_S(\omega) + R_L)}{j (X_P(\omega) + X_S(\omega)) + R_L} + j X_M(\omega)
+    \end{aligned}
 \end{equation}
 
 \begin{equation} \label{eq:R_IN}
-    R_{IN}=\frac{{C_S}^2 R_{L}}{{C_P}^2 {C_S}^2 {L_{LOOP}}^2 \omega^4 + {C_P}^2 {C_S}^2 {R_{L}}^2
-    \omega^2 - 2 {C_P}^2 C_S L_{L} \omega^2 + {C_P}^2 - 2 C_P {C_S}^2 L_{L} \omega^2 + 2 C_P C_S + {C_S}^2}
+    R_{IN}=Re(Z_{IN})=\frac{{X_P(\omega)}^2 R_L}{{R_L}^2+(X_P(\omega)+X_S(\omega))^2}
 \end{equation}
 
 \begin{equation} \label{eq:X_IN}
-    X_{IN}= Im(Z_{IN}) = \frac{X_P ({R_L}^2 + X_S(X_P+X_S))}{{R_L}^2+(X_P+X_S)^2}+X_M
+    X_{IN}= Im(Z_{IN}) = \frac{X_P(\omega) ({R_L}^2 +
+    X_S(\omega)(X_P(\omega)+X_S(\omega)))}{{R_L}^2+(X_P(\omega)+X_S(\omega))^2}+X_M(\omega)
 \end{equation}
 
 \section{Loop Component selection}
@@ -80,50 +88,50 @@ $50\Omega$ load at its input. Therefore, component values should be selected suc
 $X_{IN}=0\Omega$. Call this optimal input impedance $Z_{IN_{OPT}}$.
 
 \subsubsection{Preamp Decoupling}
-Preamp decoupling is typicall achieved by resonating a capacitor in the loop ($C_P$ in figure \ref{fig:loop_model}) with
+Preamp decoupling is usually achieved by resonating a capacitor in the loop ($C_P$ in figure \ref{fig:loop_model}) with
 an inductor in series with one terminal of the output port (in the same position as $C_M$ in figure
 \ref{fig:loop_model}) through the input of the preamplifier. In our case, however, the inductance is integrated into the
 preamplifier itself. I measure the inductance of the preamplifer input to be roughly $130nH$ at $123.25 MHz$. The
-details of the preamp topology are unavailible to me. I simply consider it to have an impedance of $Z_P$, which
-is transformed to ${Z_P}'$ (as shown in equation \ref{eq:Z_PREAMP}) by the short length of coaxial cable (with
+details of the preamp topology are unavailible to me. I simply consider it to have an impedance of $Z_P=j\omega L_P$,
+which is transformed to ${Z_P}'$ (as shown in equation \ref{eq:Z_PREAMP}) by the short length of coaxial cable (with
 characteristic impeance $Z_0$) connecting the preamp to the loop.
 
 \begin{equation} \label{eq:Z_PREAMP}
-    {Z_P}'=Z_0 \cdot \frac{Z_P-j Z_0 \cdot \tan(2\pi\cdot\frac{L_{COAX}}{\lambda})}{Z_0 - j Z_P \cdot
+    {Z_P}'(\omega)=Z_0 \cdot \frac{Z_P(\omega)-j Z_0 \cdot \tan(2\pi\cdot\frac{L_{COAX}}{\lambda})}{Z_0 - j Z_P(\omega) \cdot
     \tan(2\pi\cdot\frac{L_{COAX}}{\lambda})}
 \end{equation}
 
 \begin{equation} \label{eq:X_PREAMP}
-    {X_P}'=Im({Z_P}')
+    {X_P}'(\omega)=Im({Z_P}'(\omega))
 \end{equation}
     
 In any case, preamp decoupling is achieved when $C_P$, $C_M$, and the transformed preamp input impedance resonate
 together, as defined in equation \ref{eq:preamp_decoupling_condition}.
 
 \begin{equation} \label{eq:preamp_decoupling_condition}
-    X_P + X_M +{X_P}' = 0
+    X_P(\omega) + X_M(\omega) +{X_P}'(\omega) = 0
 \end{equation}
 
 
 \subsection{Loop Resonance}
 
-I define loop resonance as occuring at a frequency $\omega_0$ where $X_P + X_S = 0$. In this case, the equations for
-$R_{IN}$ and $X_{IN}$ simplify to equations \ref{eq:R_IN_RES} and \ref{eq:X_IN_RES} respectively. Rearranging equation
-\ref{eq:R_IN_RES} into equation \ref{eq:X_P_RIN} gives a formula for setting the value of $R_IN$ on resonance; however,
-it is then impossible to select $X_M$ to simultaneously achieve zero $X_{IN}$ and satisfy the preamp decoupling conditon
-(equation \ref{eq:preamp_decoupling_condition})
+I define loop resonance as occuring when $X_P + X_S = 0$, at a frequency of $\omega_0$ (eq. \ref{eq:w0}. In this case, the equations for
+$R_{IN}$ and $X_{IN}$ simplify to equations \ref{eq:R_IN_RES} and \ref{eq:X_IN_RES} respectively. One can begin to see
+how components could be selected to set $R_{IN}\big|_{\omega=\omega_0}=Re(Z_{IN_{OPT}})$, but with the topology we've selected it is impossible
+to achieve $X_{IN}\big|_{\omega=\omega_0}=0$. You could do both if you chaged $C_M$ to an inductor, but then it becomes
+impossible to meet the preamp decoupling condition (eq. \ref{eq:preamp_decoupling_condition}).
 
+
+\begin{equation} \label{eq:w0}
+    \omega_0 = \sqrt{\frac{C_P+C_S}{C_P C_S L_L}}
+\end{equation}
 
 \begin{equation} \label{eq:R_IN_RES}
-    R_{IN}\big|_{\omega=\omega_0}=\frac{{X_P}^2}{R_L} = \frac{{X_S}^2}{R_L} 
+    R_{IN}\big|_{\omega=\omega_0}= \frac{C_S L_L}{R_L C_P (C_P + C_S)}
 \end{equation}
 
 \begin{equation} \label{eq:X_IN_RES}
-    X_{IN}\big|_{\omega=\omega_0}=X_P+X_M=-X_S+X_M
-\end{equation}
-
-\begin{equation} \label{eq:X_P_RIN}
-    X_{P}(R_{IN})\big|_{\omega=\omega_0}=-\sqrt{R_{LOAD} \cdot R_{IN}} 
+    X_{IN}\big|_{\omega=\omega_0}=-\sqrt{\frac{C_S L_L}{C_P (C_P + C_S)}} \cdot \frac{C_M + C_P}{C_M}
 \end{equation}
 
 \subsection{Off resonance behavior}
@@ -131,47 +139,100 @@ It is not necessary that the loop be tuned to resonate precisely at the frequenc
 $\omega_0$ relative to that of the Lamor frequency $\omega_L$ is another variable that we can manipulate to achieve the
 desired loop circuit characteristics.
 
-\subsubsection{Choosing $X_P$}
-Consider choosing $X_P=-\sqrt{\alpha\ \cdot Z_{OPT} \cdot R_{LOAD}}$, so that the value of $R_{IN}$ on resonance is a
-factor of $\alpha$ larger than $Z_{OPT}$. Substituting this value into eq. \ref{eq:R_IN}, we get a new equation for
-$R_{IN}$: eq. \ref{eq:R_IN_alpha}. The frequency dependent value of $R_{IN}$ is plotted in figure
-\ref{fig:impedance_plot}
+\subsubsection{Capacitive Divider Ratio}
+Consider choosing $C_P$ and $C_S$ to achieve loop resonance at a frequency a factor $\alpha$ away from $\omega_L$, so
+that $\omega_0 = \alpha\cdot\omega_L$. We can quickly eliminate $C_S$ from eq. \ref{eq:w0}. Whatever $C_P$, $\alpha$, and
+$\omega_L$ we choose will imply eq. \ref{eq:CS_alpha} for $C_S$.
 
-\begin{equation} \label{eq:R_IN_alpha}
-    R_{IN}\big|_{X_P=-\sqrt{\alpha Z_{OPT} R_{LOAD}}} = \frac{\alpha Z_{OPT} {R_{LOAD}}^2}{{R_L}^2 + \alpha Z_{OPT} R_{LOAD} - 2\sqrt{\alpha Z_{OPT} R_{LOAD}} X_S + {X_S}^2}
+\begin{equation} \label{eq:CS_alpha}
+    C_S(C_P,\alpha,\omega_L) = \frac{C_P}{C_P L_L \alpha^2 {\omega_L}^2 -1}
 \end{equation}
 
-\subsubsection{Choosing $X_S$}
-Indeed, when $X_P=-\sqrt{\alpha Z_{OPT} R_{LOAD}}$ and $X_S=\sqrt{\alpha Z_{OPT} R_{LOAD}}$, eq.  \ref{eq:R_IN_alpha}
-reduces to $R_{IN} = \alpha \cdot Z_{OPT}$.  But on either side of this resonant peak, there is a single frequency at
-which $R_{IN} = Z_{OPT}$. Solving \ref{eq:R_IN_alpha} for the two values of $X_S$ at which this occurs, we get: $$X_S =
-\sqrt{\alpha Z_{OPT} R_{LOAD}} \pm R_{LOAD} \sqrt{\alpha - 1}$$ We choose the minus sign in this expression, and thus
-achieve $R_{IN} = Z_{OPT}$ at a frequency below $\omega_0$, because this makes the sytem of equations in the next step
-solvable.
+Plugging eq. \ref{eq:CS_alpha} into eq. \ref{eq:R_IN}, then solving $R_{IN} = Z_{IN_{OPT}}$ for $C_P$, we get eq.
+\ref{eq:CP_alpha}.
 
-\subsubsection{Choosing $\alpha$ and $X_M$}
-The only remaining free parameters are $\alpha$ and $X_M$.  They must be chosen to achieve purely real input inpedance
-($X_{IN} = 0$) and preamp decoupling ($X_P + X_M +{X_P}' = 0$). Plugging in the values of $X_P$ and $X_S$ that we've
-selected so far into these two requirements, we get a system of equations with a singe set of solutions:
-$$
-\begin{aligned}
-    Z_{OPT} \sqrt{\alpha - 1} - \sqrt{\alpha Z_{OPT} R_{LOAD}} + X_M &= 0\\
-    -\sqrt{\alpha Z_{OPT}} + X_M + {X_P}' &= 0
-\end{aligned}
-\implies
-\begin{aligned}
-    \alpha &= 1 + \frac{{X_P}'^2}{Z_{OPT}}\\
-    X_M &= \sqrt{\frac{R_{LOAD}}{Z_{OPT}} ({X_P}'^2 + {Z_{OPT}}^2} - {X_P}'
-\end{aligned}
-$$
+\begin{equation} \label{eq:CP_alpha}
+    C_P(\alpha,\omega_L) = \frac{1}{\omega_L}\sqrt{\frac{R_{LOAD}}{Z_{IN_{OPT}} ( {R_{LOAD}}^2 + (\alpha^2-1)^2 {\omega_L}^2
+    {L_{LOOP}}^2}}
+\end{equation}
+
+\subsubsection{Choosing $\alpha$ and $C_M$}
+The only remaining free parameters are $\alpha$ and $C_M$.  They must be chosen to achieve purely real input inpedance
+($X_{IN} = 0$) and preamp decoupling ($X_P(\omega_L) + X_M(\omega_L) +{X_P}'(\omega_L) = 0$). Plugging in $C_S$ and
+$C_P$ from above into these two requirements results in a system of equations \ref{eq:syseq}. Constraining $\alpha$ to
+be positive, this system has single solution: $\alpha$ as in eq. \ref{eq:alpha} and $C_M$ as in eq.
+\ref{eq:component_values}.
+
+\begin{equation}\label{eq:syseq}
+\begin{cases}
+    \frac{-1}{\omega_L C_M} + \frac{(\alpha^2-1) \omega_L L_{LOOP} Z_{IN_{OPT}}}{R_{LOAD}} - \frac{1}{\omega_L
+    C_P(\alpha,\omega_L)} = 0\\
+
+    \frac{-1}{\omega_L C_M} + \omega_L L_{PRE} - \frac{1}{\omega_L C_P(\alpha, \omega_L)} = 0 
+
+\end{cases}
+\end{equation}
+
+\begin{equation}\label{eq:alpha}
+    \alpha = \sqrt{1 + \frac{L_{PRE} R_{LOAD}}{L_{LOOP} Z_{IN_{OPT}}}}
+\end{equation}
 
 \subsection{Optimal Component values}
+With $\alpha$ uniquely determined, $C_M$, $C_P$, and $C_S$ are each fully constrained. Our final componet value formulas
+are shown in eq. \ref{eq:component_values}.
 
 
+\begin{equation}\label{eq:component_values}
+\begin{aligned}
+        C_M &= \frac{1}{\omega_L} \cdot \frac{1}{\omega_L L_{PRE} - \sqrt{\frac{R_{LOAD}}{Z_{IN_{OPT}}} ({\omega_L}^2 {L_{PRE}}^2 + Z_{IN_{OPT}}^2)}}\\
+        C_P &= \frac{1}{\omega_L} \cdot \frac{1}{\sqrt{\frac{R_{LOAD}}{Z_{IN_{OPT}}} ({\omega_L}^2 {L_{PRE}}^2 + Z_{IN_{OPT}}^2)}}\\
+        C_S &= \frac{1}{\omega_L} \cdot \frac{1}{\omega_L(L_{PRE} \frac{R_{LOAD}}{Z_{IN{OPT}}} + L_{LOOP}) - \sqrt{\frac{R_{LOAD}}{Z_{IN_{OPT}}} ({\omega_L}^2 {L_{PRE}}^2 + Z_{IN_{OPT}}^2)}}
+\end{aligned}
+\end{equation}
 
+\subsection{Verifying Optimal Component Values}
+Figure \ref{fig:impedance_plot} illustrates the success of this component selection strategy in simultaneously achieving
+optimum input impedance and preamp decoupling. The impedance plots shown are based on estimated parameters of a loop in
+the belly panel. Numerical values for this simulation are summarized in tables \ref{tab:sim_independent} and
+\ref{tab:sim_dependent}.
+
+\newpage
 \begin{figure}
     \centering
     \input{figures/impedance_plot.pdf_tex}
     \caption{Loop impedances vs. frequency with optimal component values}
     \label{fig:impedance_plot}
 \end{figure}
+
+\begin{table}[]
+\centering
+\caption{Loop Simulation Parameters}
+\label{tab:sim_independent}
+\begin{tabular}{|l|l|}
+\hline
+Parameter  & Value       \\
+\hline
+$R_{LOOP}$ & $10\Omega$  \\
+$L_{LOOP}$ & $247nH$     \\
+$L_{PRE}$  & $130nH$     \\
+    $Z_{IN_{OPT}}$  & $50\Omega$     \\
+$\omega_L$ & $123.25MHz$ \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{table}[]
+\centering
+\caption{Loop Simulation Component Values}
+\label{tab:sim_dependent}
+\begin{tabular}{|l|l|}
+\hline
+Parameter & Value       \\
+\hline
+$C_M$     & $25.8pF$  \\
+$C_P$     & $25.8pF$     \\
+$C_S$     & $8.0pF$     \\
+$\alpha$  & $1.051$ \\
+\hline
+\end{tabular}
+\end{table}
