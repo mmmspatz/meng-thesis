@@ -1,0 +1,32 @@
+\chapter{Methods}
+
+\section{MRI Data Acquisition and Reconstruction}
+Images of the pregnant abdominal phantom were acquired for using both the 64 channel fetal coil and the standard
+combination of 16 channels from a 32 channel spine array and all channels from an 18 channel flexible body array. Three
+orthogonal slices (transverse, coronal, and sagital) intersecting the fetal brain compartment were carefully duplicated
+using both array configurations. An extremely high SNR PD weighted 2DGRE sequence ($TR=3500ms, TE=4ms, FA=45^{\circ},
+FOV=400mm, \delta \approx 2mm \times 2mm \times 7mm, BW=180Hz/px$ was chosen so that each of the uncombined coil images
+has decent SNR ($>20$) in the deep central region of the fetal brain compartment, and thus can be taken as an accurate
+approximation of a coil sensitivity map \cite{Roemer90}. The same sequence was run with the reference TX voltage set to
+$0V$ to acquire noise-only data for the generation of a noise covariance matrix $\Psi$. Covariance weighted SNR maps,
+single channel SNR maps, and SENSE g-factor maps were computed offline using the resulting raw data. SNR was analyzed
+inside small circular ROIs (29 voxels total) located inside the fetal brain compartment. Data were acquired on a 3T
+Magnetom Skyra System (Siemens Healthcare, Erlangen, Germany).
+
+\section{Bench Tests}
+\subsection{Intercoil Coupling and Reflection Coefficient Measurements}
+A network analyzer connected directly to loop output ports was used to measure coupling between neighboring coil
+elements ($S_{12}$), and to measure individual coil output reflection coefficients ($S{11}$). For each of theses tests,
+the output power of the network analyzer was reduced to -25dBm and the coil was appropriately loaded by a test phantom.
+This test configuration was used during the iterative geometric decoupling adjustment process, where the loops are
+manually bent and reconfigured to minimize neighbor-to-neighbor coupling.
+
+\subsection{Loop Detuning and Preamp Decoupling Verification}
+The active detune capability and preamp decoupling performance were  tuned and characterized using a pair of decoupled
+($S_{12}<70dB$) inductive probes loosely coupled to the loop under test. In this arrangement, the $S_{12}$ measurement
+between the two probes is directly proportional to the current flowing in the loop \cite{Reykowski1995}. Both the active
+detune capability and preamplifier decoupling strategy work by introducing a second resonance near the loop resonance
+frequency, which "splits" the loop resonance into two peaks above and below the initial resonance frequency. The null
+between these peaks is moved to $\omega_L$ by adjustment of a tunable component. For the active detune strategy, this
+tunable component is an adjustable air-core inductor ($L_{TRAP}$ in fig. \ref{fig:loop_schematic}). For preamp
+decoupling, it is a trim capacitor ($C_M$ in fig.  \ref{fig:loop_schematic}).
