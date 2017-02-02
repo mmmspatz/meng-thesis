@@ -1,19 +1,20 @@
 \chapter{Loop Elements}
 
 The same basic loop circuit, shown in figure \ref{fig:loop_schematic}, is duplicated 64 times to create the full array.
+The components appearing inside the dashed green box exist on a small FR4 circuit board termed the "feed point board."
 Here, I will discuss the purpose and function of each part of this circuit.
 
 \section{Active Detuning}
 The loop is a resonant circuit that is strongly coupled to the volume surrounding it. It is necessary to spoil this
 resonance during the high power RF transmit pulses so that excessive currents are not induced in the loop. Such
-unintended energy deposition could adversely affect transmit homogenaity, damage the array, or create a safety hazard.
-This selective detuning is acheived by switching an inductor across one of the loop capacitors, creating a parallel
+unintended energy deposition could adversely affect transmit homogeneity, damage the array, or create a safety hazard.
+This selective detuning is achieved by switching an inductor across one of the loop capacitors, creating a parallel
 resonant tank that behaves as an open circuit in the loop at $\omega_L$.
 
 A DC bias current of about $120mA$ is injected on the line marked BIAS in figure \ref{fig:loop_schematic}. This bias
 current flows through a PIN diode, $D_1$, creating an RF short and effectively switching $L_{TRAP}$ across $C_{S3}$.
 $L_{TRAP}$ is an adjustable air core inductor, and is hand tuned to resonate with $C_{S3}$ at precisely $\omega_L$. The 
-parallel resonant circuit thus formed creates a virtual open ciruit in the loop, preventing current from flowing. As 
+parallel resonant circuit thus formed creates a virtual open circuit in the loop, preventing current from flowing. As 
 soon as the bias current is removed and the diode recovers, the trap is disabled and the loop once again becomes tuned.
 
 \section{Passive Detuning}
@@ -21,7 +22,7 @@ The active detuning strategy is sufficient for assurance of image quality and pr
 passive method is required to ensure patient safety in the event of an electrical failure. The crossed diode pair $D_2$
 clamps the voltage across $C_{S3}$ and $L_{TRAP}$ to safe levels, passively enabling the trap if the energy stored in
 the loop gets too high. Other designs might also include RF fuses in the loop circuit, but the loops employed in this
-array are all small enough that this was not necesarry.
+array are all small enough that this was not necessary.
 
 \begin{figure}
     \centering
@@ -40,14 +41,14 @@ $R_{LOAD}=\sqrt{\frac{L}{C}}\cdot\frac{1}{Q}$
 \section{Complete Loop Circuit}
 Figure \ref{fig:loop_model} B shows the creation of an output port in the loop circuit. The total loop capacitance is
 split into $C_P$, across which the output port is formed, and $C_S$. A series capacitor $C_M$ is added to one terminal
-of the output port. In some parts of the the following analisys, grouping components values into the block impedances
+of the output port. In the first part of the following analysis, grouping components values into the block impedances
 defined in eq. \ref{eq:block_impedances} and fig. \ref{fig:loop_model} C results in clearer and more compact
 expressions, so I have made that substitution.
 
 \begin{figure}
     \centering
     \input{figures/loop_model.pdf_tex}
-    \caption{Loop circuit models}
+    \caption{Loop circuit models.}
     \label{fig:loop_model}
 \end{figure}
 
@@ -59,24 +60,24 @@ expressions, so I have made that substitution.
     \end{aligned}
 \end{equation}
 
-\section{Loop Circuit Analisys}
-The loop ciruit has an input inpedance of $Z_{IN}$ at its port, as defined in equation \ref{eq:Z_IN}. This impedance can
+\section{Loop Circuit Analysis}
+The loop circuit has an input impedance of $Z_{IN}$ at its port, as defined in equation \ref{eq:Z_IN}. This impedance can
 be split into its real and imaginary parts, $R_{IN}$ and $X_{IN}$, shown in equations \ref{eq:R_IN} and \ref{eq:X_IN}.
 
 \begin{equation} \label{eq:Z_IN}
     \begin{aligned}
         Z_{IN}&=(jX_p(\omega))\parallel(jX_S(\omega)+R_{LOAD})+jX_M(\omega)\\
-        &= \frac{j X_P(\omega) (j X_S(\omega) + R_L)}{j (X_P(\omega) + X_S(\omega)) + R_L} + j X_M(\omega)
+        &= \frac{j X_P(\omega) (j X_S(\omega) + R_{LOAD})}{j (X_P(\omega) + X_S(\omega)) + R_{LOAD}} + j X_M(\omega)
     \end{aligned}
 \end{equation}
 
 \begin{equation} \label{eq:R_IN}
-    R_{IN}=Re(Z_{IN})=\frac{{X_P(\omega)}^2 R_L}{{R_L}^2+(X_P(\omega)+X_S(\omega))^2}
+    R_{IN}=Re(Z_{IN})=\frac{{X_P(\omega)}^2 R_{LOAD}}{{R_{LOAD}}^2+(X_P(\omega)+X_S(\omega))^2}
 \end{equation}
 
 \begin{equation} \label{eq:X_IN}
-    X_{IN}= Im(Z_{IN}) = \frac{X_P(\omega) ({R_L}^2 +
-    X_S(\omega)(X_P(\omega)+X_S(\omega)))}{{R_L}^2+(X_P(\omega)+X_S(\omega))^2}+X_M(\omega)
+    X_{IN}= Im(Z_{IN}) = \frac{X_P(\omega) ({R_{LOAD}}^2 +
+    X_S(\omega)(X_P(\omega)+X_S(\omega)))}{{R_{LOAD}}^2+(X_P(\omega)+X_S(\omega))^2}+X_M(\omega)
 \end{equation}
 
 \section{Loop Component selection}
@@ -92,46 +93,45 @@ Preamp decoupling is usually achieved by resonating a capacitor in the loop ($C_
 an inductor in series with one terminal of the output port (in the same position as $C_M$ in figure
 \ref{fig:loop_model}) through the input of the preamplifier. In our case, however, the inductance is integrated into the
 preamplifier itself. I measure the inductance of the preamplifer input to be roughly $130nH$ at $123.25 MHz$. The
-details of the preamp topology are unavailible to me. I simply consider it to have an impedance of $Z_P=j\omega L_P$,
-which is transformed to ${Z_P}'$ (as shown in equation \ref{eq:Z_PREAMP}) by the short length of coaxial cable (with
-characteristic impeance $Z_0$) connecting the preamp to the loop.
+details of the preamp topology are unavailable to me, so I simply consider it to have an impedance of $Z_{PRE}=j\omega
+L_{PRE}$, which is transformed to ${Z_{PRE}}'$ (as shown in equation \ref{eq:Z_PREAMP}) by the short length of coaxial
+cable (with characteristic impedance $Z_0$) connecting the preamp to the loop.
 
 \begin{equation} \label{eq:Z_PREAMP}
-    {Z_P}'(\omega)=Z_0 \cdot \frac{Z_P(\omega)-j Z_0 \cdot \tan(2\pi\cdot\frac{L_{COAX}}{\lambda})}{Z_0 - j Z_P(\omega) \cdot
-    \tan(2\pi\cdot\frac{L_{COAX}}{\lambda})}
+    {Z_{PRE}}'(\omega)=Z_0 \cdot \frac{Z_{PRE}(\omega)-j Z_0 \cdot \tan(2\pi\cdot\frac{L_{COAX}}{\lambda})}{Z_0 - j
+    Z_{PRE}(\omega) \cdot \tan(2\pi\cdot\frac{L_{COAX}}{\lambda})}
 \end{equation}
 
 \begin{equation} \label{eq:X_PREAMP}
-    {X_P}'(\omega)=Im({Z_P}'(\omega))
+    {X_{PRE}}'(\omega)=Im({Z_{PRE}}'(\omega))
 \end{equation}
     
 In any case, preamp decoupling is achieved when $C_P$, $C_M$, and the transformed preamp input impedance resonate
 together, as defined in equation \ref{eq:preamp_decoupling_condition}.
 
 \begin{equation} \label{eq:preamp_decoupling_condition}
-    X_P(\omega) + X_M(\omega) +{X_P}'(\omega) = 0
+    X_P(\omega) + X_M(\omega) +{X_{PRE}}'(\omega) = 0
 \end{equation}
 
-
 \subsection{Loop Resonance}
-
-I define loop resonance as occuring when $X_P + X_S = 0$, at a frequency of $\omega_0$ (eq. \ref{eq:w0}. In this case, the equations for
-$R_{IN}$ and $X_{IN}$ simplify to equations \ref{eq:R_IN_RES} and \ref{eq:X_IN_RES} respectively. One can begin to see
-how components could be selected to set $R_{IN}\big|_{\omega=\omega_0}=Re(Z_{IN_{OPT}})$, but with the topology we've selected it is impossible
-to achieve $X_{IN}\big|_{\omega=\omega_0}=0$. You could do both if you chaged $C_M$ to an inductor, but then it becomes
-impossible to meet the preamp decoupling condition (eq. \ref{eq:preamp_decoupling_condition}).
+I define loop resonance as occurring when $X_P + X_S = 0$, at a frequency of $\omega_0$ (eq. \ref{eq:w0}. In this case,
+the equations for $R_{IN}$ and $X_{IN}$ simplify to equations \ref{eq:R_IN_RES} and \ref{eq:X_IN_RES} respectively. One
+can begin to see how components could be selected to set $R_{IN}\big|_{\omega=\omega_0}=Re(Z_{IN_{OPT}})$, but with the
+topology we've selected it is impossible to achieve $X_{IN}\big|_{\omega=\omega_0}=0$. You could do both if you changed
+$C_M$ to an inductor, but then it becomes impossible to meet the preamp decoupling condition (eq.
+\ref{eq:preamp_decoupling_condition}).
 
 
 \begin{equation} \label{eq:w0}
-    \omega_0 = \sqrt{\frac{C_P+C_S}{C_P C_S L_L}}
+    \omega_0 = \sqrt{\frac{C_P+C_S}{C_P C_S L_{LOOP}}}
 \end{equation}
 
 \begin{equation} \label{eq:R_IN_RES}
-    R_{IN}\big|_{\omega=\omega_0}= \frac{C_S L_L}{R_L C_P (C_P + C_S)}
+    R_{IN}\big|_{\omega=\omega_0}= \frac{C_S L_{LOOP}}{R_{LOAD} C_P (C_P + C_S)}
 \end{equation}
 
 \begin{equation} \label{eq:X_IN_RES}
-    X_{IN}\big|_{\omega=\omega_0}=-\sqrt{\frac{C_S L_L}{C_P (C_P + C_S)}} \cdot \frac{C_M + C_P}{C_M}
+    X_{IN}\big|_{\omega=\omega_0}=-\sqrt{\frac{C_S L_{LOOP}}{C_P (C_P + C_S)}} \cdot \frac{C_M + C_P}{C_M}
 \end{equation}
 
 \subsection{Off resonance behavior}
@@ -145,7 +145,7 @@ that $\omega_0 = \alpha\cdot\omega_L$. We can quickly eliminate $C_S$ from eq. \
 $\omega_L$ we choose will imply eq. \ref{eq:CS_alpha} for $C_S$.
 
 \begin{equation} \label{eq:CS_alpha}
-    C_S(C_P,\alpha,\omega_L) = \frac{C_P}{C_P L_L \alpha^2 {\omega_L}^2 -1}
+    C_S(C_P,\alpha,\omega_L) = \frac{C_P}{C_P L_{LOOP} \alpha^2 {\omega_L}^2 -1}
 \end{equation}
 
 Plugging eq. \ref{eq:CS_alpha} into eq. \ref{eq:R_IN}, then solving $R_{IN} = Z_{IN_{OPT}}$ for $C_P$, we get eq.
@@ -157,8 +157,8 @@ Plugging eq. \ref{eq:CS_alpha} into eq. \ref{eq:R_IN}, then solving $R_{IN} = Z_
 \end{equation}
 
 \subsubsection{Choosing $\alpha$ and $C_M$}
-The only remaining free parameters are $\alpha$ and $C_M$.  They must be chosen to achieve purely real input inpedance
-($X_{IN} = 0$) and preamp decoupling ($X_P(\omega_L) + X_M(\omega_L) +{X_P}'(\omega_L) = 0$). Plugging in $C_S$ and
+The only remaining free parameters are $\alpha$ and $C_M$.  They must be chosen to achieve purely real input impedance
+($X_{IN} = 0$) and preamp decoupling ($X_P(\omega_L) + X_M(\omega_L) +{X_{PRE}}'(\omega_L) = 0$). Plugging in $C_S$ and
 $C_P$ from above into these two requirements results in a system of equations \ref{eq:syseq}. Constraining $\alpha$ to
 be positive, this system has single solution: $\alpha$ as in eq. \ref{eq:alpha} and $C_M$ as in eq.
 \ref{eq:component_values}.
@@ -178,9 +178,8 @@ be positive, this system has single solution: $\alpha$ as in eq. \ref{eq:alpha} 
 \end{equation}
 
 \subsection{Optimal Component values}
-With $\alpha$ uniquely determined, $C_M$, $C_P$, and $C_S$ are each fully constrained. Our final componet value formulas
+With $\alpha$ uniquely determined, $C_M$, $C_P$, and $C_S$ are each fully constrained. Our final component value formulas
 are shown in eq. \ref{eq:component_values}.
-
 
 \begin{equation}\label{eq:component_values}
 \begin{aligned}
@@ -200,7 +199,7 @@ the belly panel. Numerical values for this simulation are summarized in tables \
 \begin{figure}
     \centering
     \input{figures/impedance_plot.pdf_tex}
-    \caption{Loop impedances vs. frequency with optimal component values}
+    \caption{Loop impedances vs. frequency with optimal component values.}
     \label{fig:impedance_plot}
 \end{figure}
 
@@ -212,7 +211,7 @@ the belly panel. Numerical values for this simulation are summarized in tables \
 \hline
 Parameter  & Value       \\
 \hline
-$R_{LOOP}$ & $10\Omega$  \\
+$R_{LOAD}$ & $10\Omega$  \\
 $L_{LOOP}$ & $247nH$     \\
 $L_{PRE}$  & $130nH$     \\
     $Z_{IN_{OPT}}$  & $50\Omega$     \\

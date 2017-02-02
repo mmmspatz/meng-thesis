@@ -59,6 +59,6 @@
     \put(0.02849428,0.36065812){\color[rgb]{0,0,0}\rotatebox{90}{\makebox(0,0)[b]{\smash{Impedance}}}}%
     \put(0.20211627,0.58338533){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$R_{IN}$}}}%
     \put(0.20211627,0.55357147){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$X_{IN}$}}}%
-    \put(0.20211627,0.52375759){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$X_P+X_M+{X_{PREAMP}}'$}}}%
+    \put(0.20211627,0.52375759){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$X_P+X_M+{X_{PRE}}'$}}}%
   \end{picture}%
 \endgroup%
