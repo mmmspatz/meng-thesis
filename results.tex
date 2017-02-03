@@ -85,6 +85,31 @@ a $67\%$ increase in overall acceleration factor.
 \label{fig:gfactor_cor_hf_rl}
 \end{figure}
 
+\section{Noise Matrices}
+Figure \ref{fig:noise_cov} shows the absolute value of a noise covariance matrix $\Psi$ calculated from this dataset.
+Figure \ref{fig:noise_cor} shows the same data normalized along the diagonal so that the element with indices $j,k$ is
+the correlation coefficient for channels $i$ and $k$. The correlation coefficient is equal to 1 when $j=k$.
+
+The average off diagonal correlation coefficient is $0.051$, and the maximum is 
+
+Looking at the correlation coefficient matrix, several clearly defined regions of moderate correlation are apparent,
+with almost no correlation between different regions. The groupings follow the separation of elements into different
+array panels. From top left to bottom right, we see channels from the right side wing, left side wing,
+abdomen panel, and back panel.
+
+\begin{figure}
+    \makebox[\textwidth][c]{\includegraphics[width=4in]{figures/noise_cov.png}}
+    \caption{Absolute value of noise covariance matrix ($|\Psi|$).}
+\label{fig:noise_cov}
+\end{figure}
+
+\begin{figure}
+    \makebox[\textwidth][c]{\includegraphics[width=4in]{figures/noise_cor.png}}
+    \caption{Absolute value of inter-channel noise correlation coefficients ($|\sqrt{diag(\Psi)}^{-1} \cdot \Psi \cdot
+    \sqrt{diag(\Psi)}|$).}
+\label{fig:noise_cor}
+\end{figure}
+
 \section{Per-Element SNR}
 Figure \ref{fig:loop_snr_contributions} is a 1:4 scale diagram of the actual loop geometry used in the fetal array.
 Displayed inside each loop is the mean SNR of that channel inside the fetal brain ROI. It can be seen that elements in
