@@ -1,6 +1,59 @@
 \chapter{Background}
-Magnetic resonance imaging is, as the name suggests, enabled by the phenomenon of magnetic resonance. Atoms with an odd
-number of protons or neutrons possess net nuclear spin, and therefore effectively have small magnetic moments which can
-be made to resonate at a precisely defined frequency in the presence of a static magnetic field. Hydrogen
-(\ce{^{1}_{1}H}) is such an atom, and is the main candidate for clinical imaging because of the abundance of \ce{H2O} in
-living things \cite{nishimura}.
+Magnetic resonance imaging is, as the name suggests, enabled by the phenomenon of magnetic resonance.
+
+\section{Origin of MR signal}
+
+\subsection{Nuclear Spins}
+
+Spin is a quantum mechanical property that describes the intrinsic angular momentum of a particle. Atoms with an odd
+number of protons or neutrons possess net nuclear spin, and therefore have mutually aligned angular momentum $\vec{S}$
+and magnetic dipole moment $\mu= \gamma \vec{S}$, where $\gamma$ is the gyromagnetic ratio: a constant defined for each
+element. Hydrogen (\ce{^{1}_{1}H}) is such an atom, and is the main candidate for clinical imaging because of the
+abundance of \ce{H2O} in living things. Along a give axis, hydrogen spins are quantized to $\pm \frac{\hbar}2$.
+Therefore, hydrogen dipole moments are likewise quantized to eq. \ref{eq:dipole}.
+
+\begin{equation}\label{eq:dipole}
+    \mu = \pm \gamma \frac{\hbar}{2}
+\end{equation}
+
+\subsection{Spins in the Presence of External Magnetic Field}
+
+In the presence of a magnetic field $B$, the potential energy of a spin with dipole moment $\mu$ is $-\mu \cdot B$ (eq.
+\ref{eq:spin_energy}). Because $\mu$ is quantized, there is a gap $\Delta E$ between realizable energy states
+\ref{eq:delta_E}.
+
+\subsubsection{Polarization}
+Spins tend to settle in the low energy state, pointing in the direction of $B$. However, at room temperature, thermal
+energy vastly exceeds the energy gap between the two states, and the ratio of spins aligned with B ($n_+$) to those anti
+aligned ($n_-$) is described by the Boltzmann distribution \ref{eq:boltzmann}. For hydrogen ($\gamma =
+\frac{42.58}{2\pi} \frac{MHz}{T}$) at room temperature ($T=273 K$) at a field strength of $3T$, $\Delta E = 5.283 \times
+10^{-7} eV$, and $\frac{n_-}{n_+} \approx (1 - 2.25 \times 10^{-5})$. This relatively tiny fraction of excess spin
+polarization is the source of the NMR signal. Luckily, there are $3.3428 \times 10^{23}$ protons in a gram of water,
+resulting in $7.5 \times 10^{18}$ aligned spins per gram under the previously stated conditions. Since living things
+tend to contain mostly water, the proposal of MRI is still promising.
+
+\begin{equation}\label{eq:spin_energy}
+    E = \mu \cdot B
+\end{equation}
+
+\begin{equation}\label{eq:delta_E}
+    \Delta E = \gamma \hbar B
+\end{equation}
+
+\begin{equation}\label{eq:boltzmann}
+    \frac{n_-}{n_+} = \exp(\frac{\Delta E}{k T}) = \exp(\frac{\gamma \hbar B}{k T})
+\end{equation}
+
+\subsection{Bloch Equation}
+
+\subsubsection{Precession}
+
+\subsection{RF Excitation}
+
+\section{Imaging Methods}
+\subsection{RF Excitation}
+\subsection{Linear Gradient Fields}
+\subsection{Signal Equation}
+\subsection{Imaging with the 2DFT}
+
+\section{Noise in MRI}
