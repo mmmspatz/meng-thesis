@@ -1,52 +1,124 @@
+\newcommand{\uvec}[1]{\bm{\hat{#1}}}
+\newcommand{\bvec}[1]{\bm{\vec{#1}}}
+
 \chapter{Background}
 Magnetic resonance imaging is, as the name suggests, enabled by the phenomenon of magnetic resonance.
 
 \section{Origin of MR signal}
 
 \subsection{Nuclear Spins}
-
 Spin is a quantum mechanical property that describes the intrinsic angular momentum of a particle. Atoms with an odd
-number of protons or neutrons possess net nuclear spin, and therefore have mutually aligned angular momentum $\vec{S}$
-and magnetic dipole moment $\mu= \gamma \vec{S}$, where $\gamma$ is the gyromagnetic ratio: a constant defined for each
-element. Hydrogen (\ce{^{1}_{1}H}) is such an atom, and is the main candidate for clinical imaging because of the
-abundance of \ce{H2O} in living things. Along a give axis, hydrogen spins are quantized to $\pm \frac{\hbar}2$.
-Therefore, hydrogen dipole moments are likewise quantized to eq. \ref{eq:dipole}.
+number of protons or neutrons possess net nuclear spin, and therefore have mutually aligned angular momentum $\bvec{S}$
+and magnetic dipole moment $\bvec{\mu}= \gamma \bvec{S}$, where $\gamma$ is the gyromagnetic ratio: a known constant
+defined for every nucleus. Hydrogen (\ce{^{1}_{1}H}) is such an atom, having one proton and no neutrons. Along a give
+axis, hydrogen spins are quantized to $\pm \frac{\hbar}2$.  Therefore, hydrogen dipole moments are likewise quantized to
+eq. \ref{eq:dipole}.
 
 \begin{equation}\label{eq:dipole}
     \mu = \pm \gamma \frac{\hbar}{2}
 \end{equation}
 
 \subsection{Spins in the Presence of External Magnetic Field}
-
-In the presence of a magnetic field $B$, the potential energy of a spin with dipole moment $\mu$ is $-\mu \cdot B$ (eq.
-\ref{eq:spin_energy}). Because $\mu$ is quantized, there is a gap $\Delta E$ between realizable energy states
-\ref{eq:delta_E}.
-
-\subsubsection{Polarization}
-Spins tend to settle in the low energy state, pointing in the direction of $B$. However, at room temperature, thermal
-energy vastly exceeds the energy gap between the two states, and the ratio of spins aligned with B ($n_+$) to those anti
-aligned ($n_-$) is described by the Boltzmann distribution \ref{eq:boltzmann}. For hydrogen ($\gamma =
-\frac{42.58}{2\pi} \frac{MHz}{T}$) at room temperature ($T=273 K$) at a field strength of $3T$, $\Delta E = 5.283 \times
-10^{-7} eV$, and $\frac{n_-}{n_+} \approx (1 - 2.25 \times 10^{-5})$. This relatively tiny fraction of excess spin
-polarization is the source of the NMR signal. Luckily, there are $3.3428 \times 10^{23}$ protons in a gram of water,
-resulting in $7.5 \times 10^{18}$ aligned spins per gram under the previously stated conditions. Since living things
-tend to contain mostly water, the proposal of MRI is still promising.
+In the presence of a strong polarizing field pointing in the $\uvec{k}$ direction and with magnitude $B_0$, the
+potential energy of a spin with dipole moment $\bvec{\mu}$ is the dot product between the two vectors (eq.
+\ref{eq:spin_energy}). Because $\mu$ is quantized, there is a gap $\Delta E$ between realizable energy states (eq.
+\ref{eq:delta_E}).
 
 \begin{equation}\label{eq:spin_energy}
-    E = \mu \cdot B
+    E = \bvec{\mu} \cdot \bvec{B_0}
 \end{equation}
 
 \begin{equation}\label{eq:delta_E}
-    \Delta E = \gamma \hbar B
+    \Delta E = \gamma \hbar B_0
 \end{equation}
 
+\subsubsection{Polarization}
+Spins tend to settle in the low energy state, pointing in the direction of $\bvec{B_0}$. However, at room temperature,
+thermal energy vastly exceeds the energy gap between the two states, and the ratio of spins aligned with $\bvec{B_0}$
+($n_+$) to those anti aligned ($n_-$) is described by the Boltzmann distribution in eq. \ref{eq:boltzmann}. For hydrogen
+($\gamma = \frac{42.58}{2\pi} \frac{MHz}{T}$) at room temperature ($T=273 K$) at a field strength of $3T$, $\Delta E =
+5.283 \times 10^{-7} eV$, and $\frac{n_-}{n_+} \approx (1 - 2.25 \times 10^{-5})$. This relatively tiny fraction of
+excess spin polarization is the source of the NMR signal. Luckily, there are $3.3428 \times 10^{23}$ protons in a gram
+of water, resulting in $7.5 \times 10^{18}$ aligned spins per gram under the previously stated conditions. Since living
+things tend to contain mostly water, the proposal of MRI is still promising.
+
 \begin{equation}\label{eq:boltzmann}
-    \frac{n_-}{n_+} = \exp(\frac{\Delta E}{k T}) = \exp(\frac{\gamma \hbar B}{k T})
+    \frac{n_-}{n_+} = \exp(-\frac{\Delta E}{k T}) = \exp(-\frac{\gamma \hbar B_0}{k T})
+\end{equation}
+
+In a large population of spins, the net magnetic dipole moment per unit volume is termed $\bvec{M}$. In equilibrium, it
+is the product of the volumetric spin density $N$, the magnitude of a single spin dipole moment $\mu$, and the excess
+fraction of aligned spins. It points in the same direction as $\bvec{B_0}$ and has magnitude $M_0$. Using the first two
+terms of a taylor series expansion of the Boltzmann distribution, we can approximate $M_0$ as eq. \ref{eq:M}.
+
+\begin{equation}\label{eq:M}
+    M_0 = N \cdot \mu \cdot (1-\exp(-\frac{\Delta E}{k T})) \approx \frac{N \gamma^2 \hbar^2 B_0}{2 k T}
+\end{equation}
+
+\subsection{Spin Dynamics}
+In equilibrium, $\bvec{M}$ comes to point in the direction $\bvec{B_0}$ with magnitude $M_0$. But the next step will be
+to tip $\bvec{M}$ off of the $z$ axis so that it has a component in the $x$-$y$ plane. The observed behavior will then
+be time varying.
+
+\subsubsection{Precession}
+A single magnetic dipole $\bvec{\mu}$ with mutually aligned angular momentum $\bvec{S}$ placed in an external magnetic
+field $\bvec{B}$ will experience a torque $\bvec{\mu} \times \bvec{B}$. Multiplying this torque by $\gamma$ gives an
+expression for the time rate of change of $\bvec{\mu}$, eq. \ref{eq:dipole_precession}. Eq. \ref{eq:dipole_precession}
+shows $\bvec{\mu}$ moving in a direction perpendicular to both itself and $\bvec{B}$, i.e. precessing about $\bvec{B}$.
+The frequency of this precession is $\omega$ in eq. \ref{eq:precession_freq}.
+
+\begin{equation}\label{eq:dipole_precession}
+    \frac{d \bvec{\mu}}{dt} = \bvec{\mu} \times \gamma \bvec{B}
+\end{equation}
+
+\begin{equation}\label{eq:precession_freq}
+    \omega = \gamma \cdot B
+\end{equation}
+
+A population of dipole moments precessing in synchrony gives a net magnetization $\bvec{M}$ that also precesses at $\omega$.
+
+\subsubsection{Longitudinal Relaxation}
+Define the component of $\bvec{M}$ that is parallel to $\bvec{B_0}$ as $\bvec{M_z}$. In equilibrium $|\bvec{M_z}| =
+M_0$, but immediately following the tipping of $\bvec{M}$ into the $x$-$y$ plane by an angle $\alpha$ at time $t=0$,
+$\bvec{M_z}$ is reduced to a value shown in eq. \ref{eq:mz_postflip}.
+
+\begin{equation}\label{eq:mz_postflip}
+    \bvec{M_z}(t=0+) = \cos(\alpha) \cdot \bvec{M_z}(0-)
+\end{equation}
+
+$\bvec{M_z}$ then begins to exponentially recover to its equilibrium magnitude of $M_0$. The time constant associated
+with this longitudinal recovery is termed $T_1$. $T_1$ is dependent on the tissue or material being imaged, but also has
+a positive dependence on $B_0$ field strength.
+
+\begin{equation}\label{eq:t1_decay}
+    \bvec{M_{z}}(t) = \uvec{k} M_0 + (\bvec{M_{z}}(0) - \uvec{k} M_0) \cdot \exp(-\frac{t}{T_1})
+\end{equation}
+
+\subsubsection{Transverse Relaxation}
+Define the component of $\bvec{M}$ that is perpendicular to $\bvec{B_0}$ as $\bvec{M_{xy}}$. In equilibrium,
+$\bvec{M_{xy}} = 0$.  Immediately following the tipping of $\bvec{M}$ into the $x$-$y$ plane by an angle $\alpha$ at
+time $t=0$, $\bvec{M_{xy}}$ is as shown in eq. \ref{eq:mxy_postflip}. Individual spins begin to dephase as soon as they
+are tipped into the $x$-$y$ plane, and so the net transverse magnetization $\bvec{M_{xy}}$ experiences exponential
+decay, as shown in eq. \ref{eq:t2_decay}. The time constant associated with this transverse decay is termed $T_2$, and
+is a property of the tissue or material being imaged.
+
+\begin{equation}\label{eq:mxy_postflip}
+    \bvec{M_{xy}}(t=0+) = \sin(\alpha) \cdot \bvec{M_z}(0-)
+\end{equation}
+
+\begin{equation}\label{eq:t2_decay}
+    \bvec{M_{xy}}(t) = \bvec{M_{xy}}(0) \cdot \exp(-\frac{t}{T_2})
 \end{equation}
 
 \subsection{Bloch Equation}
+Assembled together, the spin dynamics described above form the Bloch equation, shown in eq. \ref{eq:bloch}. The complete
+Bloch equation describes the behavior of spins in a generalized external magnetic field $\bvec{B}$ that is the sum of
+the main field $B_0$, the RF field $B_1$, and the linearly varying gradient fields $G$. 
 
-\subsubsection{Precession}
+\begin{equation}\label{eq:bloch}
+    \frac{d \bvec{M}}{dt} = \bvec{M} \times \gamma \bvec{B} - \frac{M_x \uvec{i} + M_y \uvec{j}}{T_2} - \frac{(M_z - M_0)
+    \uvec{k}}{T_1}
+\end{equation}
 
 \subsection{RF Excitation}
 
