@@ -7,10 +7,10 @@ Magnetic resonance imaging is, as the name suggests, enabled by the phenomenon o
 \section{Origin of MR signal}
 
 \subsection{Nuclear Spins}
-Spin is a quantum mechanical property that describes the intrinsic angular momentum of a particle. Atoms with an odd
+Spin is a quantum mechanical property of a particle that describes its intrinsic angular momentum. Atoms with an odd
 number of protons or neutrons possess net nuclear spin, and therefore have mutually aligned angular momentum $\bvec{S}$
 and magnetic dipole moment $\bvec{\mu}= \gamma \bvec{S}$, where $\gamma$ is the gyromagnetic ratio: a known constant
-defined for every nucleus. Hydrogen (\ce{^{1}_{1}H}) is such an atom, having one proton and no neutrons. Along a give
+defined for every nucleus. Hydrogen (\ce{^{1}_{1}H}) is such an atom, having one proton and no neutrons. Along a given
 axis, hydrogen spins are quantized to $\pm \frac{\hbar}2$.  Therefore, hydrogen dipole moments are likewise quantized to
 eq. \ref{eq:dipole}.
 
@@ -65,17 +65,18 @@ A single magnetic dipole $\bvec{\mu}$ with mutually aligned angular momentum $\b
 field $\bvec{B}$ will experience a torque $\bvec{\mu} \times \bvec{B}$. Multiplying this torque by $\gamma$ gives an
 expression for the time rate of change of $\bvec{\mu}$, eq. \ref{eq:dipole_precession}. Eq. \ref{eq:dipole_precession}
 shows $\bvec{\mu}$ moving in a direction perpendicular to both itself and $\bvec{B}$, i.e. precessing about $\bvec{B}$.
-The frequency of this precession is $\omega$ in eq. \ref{eq:precession_freq}.
+The frequency of this precession is $\omega_L$ in eq. \ref{eq:precession_freq}.
 
 \begin{equation}\label{eq:dipole_precession}
     \frac{d \bvec{\mu}}{dt} = \bvec{\mu} \times \gamma \bvec{B}
 \end{equation}
 
 \begin{equation}\label{eq:precession_freq}
-    \omega = \gamma \cdot B
+    \omega_L = \gamma \cdot B
 \end{equation}
 
-A population of dipole moments precessing in synchrony gives a net magnetization $\bvec{M}$ that also precesses at $\omega$.
+A population of dipole moments precessing in synchrony gives a net magnetization $\bvec{M}$ that also precesses at
+$\omega_L$.
 
 \subsubsection{Longitudinal Relaxation}
 Define the component of $\bvec{M}$ that is parallel to $\bvec{B_0}$ as $\bvec{M_z}$. In equilibrium $|\bvec{M_z}| =
@@ -121,11 +122,51 @@ the main field $B_0$, the RF field $B_1$, and the linearly varying gradient fiel
 \end{equation}
 
 \subsection{RF Excitation}
+In the previous section, we covered what happens when $\bvec{B} = B_0 \uvec{k}$; the steady state solution to the Bloch
+equation is $\bvec{M} = M_0 \uvec{k}$, where $M_0$ is as defined in eq. \ref{eq:M}.  Now consider the case where
+$\bvec{B}$ is as in eq. \ref{eq:B_rot}. A transverse component rotating at a frequncy $\omega_R$ and with time varying
+amplitude $B_1(t)$ has been added. 
+
+\begin{equation}\label{eq:B_rot}
+    \bvec{B} = B_0 \uvec{k} + B_1(t) \cdot (\cos(\omega_R t) \uvec{i} - \sin(\omega_R t)\uvec{j})
+\end{equation}
+
+\section{Signal Equation}
+
+The NMR signal arises from the precessing transverse component of the magnetization vector. As we begin to focus solely
+on $\bvec{M_{xy}}$, I will follow the convention used by Nishimura \cite{nishimura} and define a new variable $M$ that
+represents the transverse magnetization as a function of location and time with single complex number.
+
+\begin{equation}\label{eq:M_complex}
+    M(\bvec{r},t) \equiv |\bvec{M_x}| + j |\bvec{M_y}|
+\end{equation}
+
+\subsection{Gradient Fields}
+
+Spatial encoding in traditional MRI is achieved by applying linearly varying gradient fields on top of the main field,
+as shown in eq. \ref{eq:gradients}. Just like $\bvec{B_0}$, $\bvec{G}$ points in the $\uvec{k}$ direction. Unlike
+$\bvec{B_0}$, $\bvec{G}$ varies as a function of space and time.
+
+\begin{equation}\label{eq:gradients}
+    \bvec{B} = (B_0 + G(\bvec{r},t))\uvec{k}
+\end{equation}
+
+After an initial flip resulting in a spatial magnetization distribution $M(\bvec{r})$, spins begin precess under the
+influence of $G$, as described in \ref{eq:phase_enc}. After a time $t$, spins at a location $\bvec{r}$ have accrued
+excess phase in proportion to the time integral of $G(\bvec{r},t)$.
+
+\begin{equation}\label{eq:phase_enc}
+    M(\bvec{r},t) = M(\bvec{r,t=0}) e^{-j \gamma B_0 t} exp(-j \gamma \int_0^t G(\bvec{r},\tau) d \tau)
+\end{equation}
+
+
+
+
+
 
 \section{Imaging Methods}
 \subsection{RF Excitation}
 \subsection{Linear Gradient Fields}
-\subsection{Signal Equation}
 \subsection{Imaging with the 2DFT}
 
 \section{Noise in MRI}
