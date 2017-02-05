@@ -7,25 +7,25 @@ Magnetic resonance imaging is, as the name suggests, enabled by the phenomenon o
 \section{Origin of MR signal}
 
 \subsection{Nuclear Spins}
-Spin is a quantum mechanical property of a particle that describes its intrinsic angular momentum. Atoms with an odd
+Spin is a quantum mechanical property that describes a particle's intrinsic angular momentum. Atoms with an odd
 number of protons or neutrons possess net nuclear spin, and therefore have mutually aligned angular momentum $\bvec{S}$
 and magnetic dipole moment $\bvec{\mu}= \gamma \bvec{S}$, where $\gamma$ is the gyromagnetic ratio: a known constant
 defined for every nucleus. Hydrogen (\ce{^{1}_{1}H}) is such an atom, having one proton and no neutrons. Along a given
 axis, hydrogen spins are quantized to $\pm \frac{\hbar}2$.  Therefore, hydrogen dipole moments are likewise quantized to
-eq. \ref{eq:dipole}.
+$\pm \gamma \frac{\hbar}{2}$ (eq. \ref{eq:dipole}).
 
 \begin{equation}\label{eq:dipole}
     \mu = \pm \gamma \frac{\hbar}{2}
 \end{equation}
 
-\subsection{Spins in the Presence of External Magnetic Field}
+\subsection{Spins in the Presence of External Magnetic Fields}
 In the presence of a strong polarizing field pointing in the $\uvec{k}$ direction and with magnitude $B_0$, the
 potential energy of a spin with dipole moment $\bvec{\mu}$ is the dot product between the two vectors (eq.
 \ref{eq:spin_energy}). Because $\mu$ is quantized, there is a gap $\Delta E$ between realizable energy states (eq.
 \ref{eq:delta_E}).
 
 \begin{equation}\label{eq:spin_energy}
-    E = \bvec{\mu} \cdot \bvec{B_0}
+    E = - \bvec{\mu} \cdot \bvec{B_0}
 \end{equation}
 
 \begin{equation}\label{eq:delta_E}
@@ -92,7 +92,7 @@ with this longitudinal recovery is termed $T_1$. $T_1$ is dependent on the tissu
 a positive dependence on $B_0$ field strength.
 
 \begin{equation}\label{eq:t1_decay}
-    \bvec{M_{z}}(t) = \uvec{k} M_0 + (\bvec{M_{z}}(0) - \uvec{k} M_0) \cdot \exp(-\frac{t}{T_1})
+    \bvec{M_{z}}(t) = \uvec{k} M_0 + (\bvec{M_{z}}(0+) - \uvec{k} M_0) \cdot \exp(-\frac{t}{T_1})
 \end{equation}
 
 \subsubsection{Transverse Relaxation}
@@ -104,11 +104,11 @@ decay, as shown in eq. \ref{eq:t2_decay}. The time constant associated with this
 is a property of the tissue or material being imaged.
 
 \begin{equation}\label{eq:mxy_postflip}
-    \bvec{M_{xy}}(t=0+) = \sin(\alpha) \cdot \bvec{M_z}(0-)
+    \bvec{M_{xy}}(t=0+) = \uvec{i}\sin(\alpha) \cdot |\bvec{M_z}(0-)|
 \end{equation}
 
 \begin{equation}\label{eq:t2_decay}
-    \bvec{M_{xy}}(t) = \bvec{M_{xy}}(0) \cdot \exp(-\frac{t}{T_2})
+    \bvec{M_{xy}}(t) = \bvec{M_{xy}}(0+) \cdot \exp(-\frac{t}{T_2})
 \end{equation}
 
 \subsection{Bloch Equation}
@@ -141,6 +141,27 @@ represents the transverse magnetization as a function of location and time with 
     M(\bvec{r},t) \equiv |\bvec{M_x}| + j |\bvec{M_y}|
 \end{equation}
 
+\subsection{Signal Detection Through Faraday Induction}
+
+The wire loop antenna is the most commonly used receive element in clinical MRI. It works by directly coupling to the
+transverse magnetization of the sample under test. The precessing magnetization produces a time varying magnetic flux
+piercing the surface defined by the loop, which induces a voltage $\epsilon$ around the loop through Faraday induction.
+
+\begin{equation}\label{eq:faraday_induction}
+    \epsilon = - \frac{d \Phi_B}{dt} = -\frac{d}{dt} \iint_A B(\bvec{r},t) dA
+\end{equation}
+
+A loop antenna has spatially varying sensitivity to spins.  If a unit current through the loop produces a field
+$\bvec{B_1}$ at location $\bvec{r}$ in the sample, then magnetization $\bvec{M}$ at that location produces a flux of
+$\bvec{B_1} \cdot \bvec{M}$ through the loop.  \cite{Hoult1979}. Citing linearity, we can find an expression for the
+total voltage induced around the loop by summing the individual contributions from every location in the sample volume.
+
+\begin{equation}\label{eq:reciprocity}
+    \epsilon = -\frac{d}{dt} \iiint_V \bvec{B_1}(\bvec{r}) \cdot \bvec{M}(\bvec{r}) d\bvec{r}
+\end{equation}
+
+The voltage around the loop depends on a volume integral over the entire sample volume.
+
 \subsection{Gradient Fields}
 
 Spatial encoding in traditional MRI is achieved by applying linearly varying gradient fields on top of the main field,
@@ -159,6 +180,14 @@ excess phase in proportion to the time integral of $G(\bvec{r},t)$.
     M(\bvec{r},t) = M(\bvec{r,t=0}) e^{-j \gamma B_0 t} exp(-j \gamma \int_0^t G(\bvec{r},\tau) d \tau)
 \end{equation}
 
+This phase based encoding of spatial information is the essence of traditional MRI.
+
+\subsection{The Fourier Transform}
+The 1D Fourier transform breaks down a function of a single variable into its individual frequency components. Its form
+is shown eq. \ref{eq:fourier_transform}
+\begin{equation}\label{eq:fourier_transform}
+    F(k_x) = \int_{-\infty}^{\infty} f(x)e^{-j2\pi k_x x} dx
+\end{equation}
 
 
 
