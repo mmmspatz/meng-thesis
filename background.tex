@@ -132,7 +132,6 @@ amplitude $B_1(t)$ has been added.
 \end{equation}
 
 \section{Signal Equation}
-
 The NMR signal arises from the precessing transverse component of the magnetization vector. As we begin to focus solely
 on $\bvec{M_{xy}}$, I will follow the convention used by Nishimura \cite{nishimura} and define a new variable $M$ that
 represents the transverse magnetization as a function of location and time with single complex number.
@@ -142,16 +141,16 @@ represents the transverse magnetization as a function of location and time with 
 \end{equation}
 
 \subsection{Signal Detection Through Faraday Induction}
-
 The wire loop antenna is the most commonly used receive element in clinical MRI. It works by directly coupling to the
-transverse magnetization of the sample under test. The precessing magnetization produces a time varying magnetic flux
-piercing the surface defined by the loop, which induces a voltage $\epsilon$ around the loop through Faraday induction.
+field produced by the transverse magnetization of the sample under test. The precessing magnetization produces a time
+varying magnetic flux piercing the surface defined by the loop, which induces a voltage $\epsilon$ around the loop
+through Faraday induction.
 
 \begin{equation}\label{eq:faraday_induction}
     \epsilon = - \frac{d \Phi_B}{dt} = -\frac{d}{dt} \iint_A B(\bvec{r},t) dA
 \end{equation}
 
-A loop antenna has spatially varying sensitivity to spins.  If a unit current through the loop produces a field
+A loop antenna has spatially varying sensitivity to spins. If a unit current through the loop produces a field
 $\bvec{B_1}$ at location $\bvec{r}$ in the sample, then magnetization $\bvec{M}$ at that location produces a flux of
 $\bvec{B_1} \cdot \bvec{M}$ through the loop.  \cite{Hoult1979}. Citing linearity, we can find an expression for the
 total voltage induced around the loop by summing the individual contributions from every location in the sample volume.
@@ -160,11 +159,20 @@ total voltage induced around the loop by summing the individual contributions fr
     \epsilon = -\frac{d}{dt} \iiint_V \bvec{B_1}(\bvec{r}) \cdot \bvec{M}(\bvec{r}) d\bvec{r}
 \end{equation}
 
-The voltage around the loop depends on a volume integral over the entire sample volume.
+The voltage around the loop depends on the time derivative of a volume integral over the entire sample volume. At this
+point, it is clear why only the precessing transverse magnetization is of interest for signal detection. Substituting
+our complex variable $M$ in eq. \ref{eq:reciprocity}, and replacing $\bvec{B_1}$ with a more general complex sensitivity
+function $S(\bvec{r})$ that also accounts for spatially dependent signal phase, we get the beginnings of the signal
+equation
+
+\begin{equation}\label{eq:signal_1}
+    \epsilon = -\frac{d}{dt} \iiint_V S(\bvec{r}) \cdot M(\bvec{r},t) d\bvec{r}
+\end{equation}
+
+\section{Fourier Encoding}
 
 \subsection{Gradient Fields}
-
-Spatial encoding in traditional MRI is achieved by applying linearly varying gradient fields on top of the main field,
+Spatial encoding in traditional MRI is achieved by applying spatially varying gradient fields on top of the main field,
 as shown in eq. \ref{eq:gradients}. Just like $\bvec{B_0}$, $\bvec{G}$ points in the $\uvec{k}$ direction. Unlike
 $\bvec{B_0}$, $\bvec{G}$ varies as a function of space and time.
 
@@ -172,30 +180,60 @@ $\bvec{B_0}$, $\bvec{G}$ varies as a function of space and time.
     \bvec{B} = (B_0 + G(\bvec{r},t))\uvec{k}
 \end{equation}
 
-After an initial flip resulting in a spatial magnetization distribution $M(\bvec{r})$, spins begin precess under the
+After an initial flip resulting in a spatial magnetization distribution $M(\bvec{r},t=1)$, spins begin precess under the
 influence of $G$, as described in \ref{eq:phase_enc}. After a time $t$, spins at a location $\bvec{r}$ have accrued
 excess phase in proportion to the time integral of $G(\bvec{r},t)$.
 
 \begin{equation}\label{eq:phase_enc}
-    M(\bvec{r},t) = M(\bvec{r,t=0}) e^{-j \gamma B_0 t} exp(-j \gamma \int_0^t G(\bvec{r},\tau) d \tau)
+    M(\bvec{r},t) = M(\bvec{r},t=0) e^{-j \gamma B_0 t} exp(-j \gamma \int_0^t G(\bvec{r},\tau) d \tau)
 \end{equation}
 
-This phase based encoding of spatial information is the essence of traditional MRI.
+Plugging this expression for $M$ into eq. \ref{eq:signal_1}, making the assumption that $B_0 >> G$ so that all spins
+precess at a frequency of approximately $\omega_L = \gamma B_0$, and dividing by $e^{-j \omega_L t}$ to downconvert to
+baseband, we extend the signal equation to describe the effect of gradient fields.
+
+\begin{equation}\label{signal_2}
+    s(t) = - j \omega_L \iiint_V S(\bvec{r}) M(\bvec{r},t=0) exp(-j \gamma \int_0^t G(\bvec{r},\tau)
+    d\tau)
+\end{equation}
+
+If we constrain ourselves to linear encoding gradients, such that
+
+\begin{equation}\label{linear_gradient}
+    G(\bvec{r}=x\uvec{i} + y\uvec{j} + z\uvec{k},t) = G_x(t) x + G_x(t) y + G_z(t) z 
+\end{equation}
+
+and then define three $k$ variables to descbibe the history of $G$ along each axis:
+
+\begin{equation}\label{k_space}
+    \begin{aligned}
+        k_x &= \frac{\gamma}{2\pi} \int_0^t G_x(\tau) d\tau\\
+        k_y &= \frac{\gamma}{2\pi} \int_0^t G_y(\tau) d\tau\\
+        k_z &= \frac{\gamma}{2\pi} \int_0^t G_z(\tau) d\tau
+    \end{aligned}
+\end{equation}
+
+we come up with the final form of the signal equation:
+
+\begin{equation}\label{eq:signal_3}
+    s(t) = - j \omega_L \iiint_V S(\bvec{r}) M(\bvec{r},t=0) e^{-j k_x x} e^{-j k_y y} e^{-j k_z z} dV 
+\end{equation}
 
 \subsection{The Fourier Transform}
-The 1D Fourier transform breaks down a function of a single variable into its individual frequency components. Its form
-is shown eq. \ref{eq:fourier_transform}
+The Fourier transform breaks down a function into its individual frequency components by taking inner products of that
+function with complex exponentials. Its one dimensional form is shown in eq. \ref{eq:fourier_transform}.
+
 \begin{equation}\label{eq:fourier_transform}
     F(k_x) = \int_{-\infty}^{\infty} f(x)e^{-j2\pi k_x x} dx
 \end{equation}
 
+Strikingly, eqs. \ref{eq:signal_3} and \ref{eq:fourier_transform} look extremely similar. The effect of our carefully
+chosen linear gradient fields has been to set up a physical three dimensional Fourier transform, where we take the inner
+product of $M$ with a complex exponential. Manipulation of $G(t)$ allows us to visit and sample arbitrary coordinates $(k_x,k_y,k_z)$
+in so called "k-space".  By collecting k-space points on a cartesian grid and obeying certain sampling criteria, we can
+collect data that directly represents a spatial Fourier transform of the sample under test, weighted by $S(\bvec{r})$
+and $M(\bvec{r},t=0+)$.
 
 
-
-
-\section{Imaging Methods}
-\subsection{RF Excitation}
-\subsection{Linear Gradient Fields}
-\subsection{Imaging with the 2DFT}
 
 \section{Noise in MRI}
