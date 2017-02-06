@@ -162,11 +162,11 @@ total voltage induced around the loop by summing the individual contributions fr
 The voltage around the loop depends on the time derivative of a volume integral over the entire sample volume. At this
 point, it is clear why only the precessing transverse magnetization is of interest for signal detection. Substituting
 our complex variable $M$ in eq. \ref{eq:reciprocity}, and replacing $\bvec{B_1}$ with a more general complex sensitivity
-function $S(\bvec{r})$ that also accounts for spatially dependent signal phase, we get the beginnings of the signal
+function $C(\bvec{r})$ that also accounts for spatially dependent signal phase, we get the beginnings of the signal
 equation
 
 \begin{equation}\label{eq:signal_1}
-    \epsilon = -\frac{d}{dt} \iiint_V S(\bvec{r}) \cdot M(\bvec{r},t) d\bvec{r}
+    \epsilon = -\frac{d}{dt} \iiint_V C(\bvec{r}) \cdot M(\bvec{r},t) d\bvec{r}
 \end{equation}
 
 \section{Fourier Encoding}
@@ -193,7 +193,7 @@ precess at a frequency of approximately $\omega_L = \gamma B_0$, and dividing by
 baseband, we extend the signal equation to describe the effect of gradient fields.
 
 \begin{equation}\label{signal_2}
-    s(t) = - j \omega_L \iiint_V S(\bvec{r}) M(\bvec{r},t=0) exp(-j \gamma \int_0^t G(\bvec{r},\tau)
+    s(t) = - j \omega_L \iiint_V C(\bvec{r}) M(\bvec{r},t=0) exp(-j \gamma \int_0^t G(\bvec{r},\tau)
     d\tau)
 \end{equation}
 
@@ -216,7 +216,7 @@ and then define three $k$ variables to descbibe the history of $G$ along each ax
 we come up with the final form of the signal equation:
 
 \begin{equation}\label{eq:signal_3}
-    s(t) = - j \omega_L \iiint_V S(\bvec{r}) M(\bvec{r},t=0) e^{-j k_x x} e^{-j k_y y} e^{-j k_z z} dV 
+    s(t) = - j \omega_L \iiint_V C(\bvec{r}) M(\bvec{r},t=0) e^{-j k_x x} e^{-j k_y y} e^{-j k_z z} dV 
 \end{equation}
 
 \subsection{The Fourier Transform}
@@ -231,9 +231,17 @@ Strikingly, eqs. \ref{eq:signal_3} and \ref{eq:fourier_transform} look extremely
 chosen linear gradient fields has been to set up a physical three dimensional Fourier transform, where we take the inner
 product of $M$ with a complex exponential. Manipulation of $G(t)$ allows us to visit and sample arbitrary coordinates $(k_x,k_y,k_z)$
 in so called "k-space".  By collecting k-space points on a cartesian grid and obeying certain sampling criteria, we can
-collect data that directly represents a spatial Fourier transform of the sample under test, weighted by $S(\bvec{r})$
+collect data that directly represents a spatial Fourier transform of the sample under test, weighted by $C(\bvec{r})$
 and $M(\bvec{r},t=0+)$.
 
-
-
 \section{Noise in MRI}
+\subsection{Thermal Noise}
+The signals involved in MRI are very weak, and extreme care is taken to avoid and minimize all possible noise
+sources. Thermal noise arising inside the body is, however, unavoidable. When a perfectly conducting wire loop is
+brought near an object with finite conductivity, inductive coupling causes a transformed resistance $R_{LOAD}$ to appear
+in the loop. $R_{LOAD}$ depends on the geometry and conductivity of the object that is loading the loop, as well as the
+strength of the coupling. If $R_{LOAD}$ is measurable, it can be used to quantify the thermal noise that will be induced
+by the sample.
+
+\begin{equation}\label{eq:thermal_noise}
+\end{equation}

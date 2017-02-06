@@ -5,13 +5,14 @@ performance metrics: SNR maps and SENSE geometry factor (g-factor) maps. A brief
 complete treatment, see the original SENSE paper: \cite{Pruessmann1999}.
 
 \section{Signal to Noise Ratio Maps}
-The MR signal to noise ratio provided by any coil or coil array varies as a function
-of space. A heatmap of SNR in a given plane is a useful visual tool that can be used to judge whether a coil is well
-suited to imaging in a particular region of interest such as the fetal brain or placenta. A SNR map is easy to generate
-for a single coil. One can simply run an imaging sequence with intrinsically high SNR twice; once with an initial RF
-excitation and once without. The first sequence should produce an image that is dominated by the MR signal, and the
-second sequence produces a noise only image. A SNR map in conventionally defined SNR units is obtained by dividing the
-first image by the standard deviation of the noise only image.
+In MRI, SNR is commonly defined as the ratio between signal amplitude and the standard deviation of noise. The MR signal
+to noise ratio provided by any coil or coil array varies as a function of space. A heatmap of SNR in a given plane is a
+useful visual tool that can be used to judge whether a coil is well suited to imaging in a particular region of interest
+such as the fetal brain or placenta. An SNR map is easy to generate for a single coil. One can simply run an imaging
+sequence with intrinsically high SNR twice; once with an initial RF excitation and once without. The first sequence
+should produce an image that is dominated by the MR signal, and the second sequence produces a noise only image. A SNR
+map in conventionally defined SNR units is obtained by dividing the first image by the standard deviation of the noise
+only image.
 
 Generating SNR maps for multi coil arrays is less straightforward, and depends on the method used to combine data from
 individual elements. The Roemer paper \cite{Roemer90} describes an optimal way of combining array coil data in the
@@ -20,9 +21,9 @@ a complete image is acquired and reconstructed from every element in the array. 
 acquired to generate a channel noise covariance matrix $\Psi$, of which a single element $Psi_{ij}$ is the noise
 covariance between receivers $i$ and $j$. Next, the individual coil images are combined on a voxel by voxel basis. For a
 single voxel, arrange the values $S_i$ of that voxel in each of the individual coil images in a vector $S$.  Similarly,
-arrange the sensitivities of each coil to the voxel under consideration in a vector $C$.The matrix equation for the
-voxel intensity in the optimal SNR uniform noise image is then \ref{eq:I_OPT}. If the individual coil images have
-sufficiently high SNR, then $S$ serves as a good approximation of $C$, and equation simplifies to \ref{eq:I_COV}.  If it
+arrange the sensitivities of each coil to the voxel under consideration in a vector $C$. The matrix equation for the
+voxel intensity in the optimal SNR uniform noise image is then eq. \ref{eq:I_OPT}. If the individual coil images have
+sufficiently high SNR, then $S$ serves as a good approximation of $C$, and equation \ref{eq:I_OPT} simplifies to \ref{eq:I_COV}.  If it
 is assumed that there is no noise correlation between distinct channels and that all channels are identically loaded,
 $\Psi$ becomes proportional to the identity matrix, and the optimal SNR formula simplifies to \ref{eq:I_RSOS}. This is
 equivalent to summing the squared magnitudes of the uncombined images, then taking the square root of the result.
@@ -39,7 +40,22 @@ I_{COV}=\sqrt{S^H\Psi^{-1}S}
 I_{RSOS}=\sqrt{S^{H} S}
 \end{equation}
 
-TODO:SNR equations
+\subsubsection{SNR Map Equations}
+
+As stated, the optimal combination method is constructed to create a uniform noise image, where every voxel in the final
+image has unity noise standard deviation. So, the expression for a voxel in an optimal combination method SNR map is the
+same as the expression for a voxel in the image:
+
+\begin{equation} \label{eq:SNR_COV}
+    SNR_{COV}= I_{COV} = \sqrt{S^H\Psi^{-1}S}
+\end{equation}
+
+For the RSOS method, the SNR map is calculated as:
+
+\begin{equation} \label{eq:SNR_COV}
+    SNR_{RSOS}= \frac{S^HS}{\sqrt{S^H \Psi S}}
+\end{equation}
+
 
 \section{SENSE Geometry Factor}
 

@@ -55,7 +55,7 @@
     \put(0.55286779,0.05725807){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{$\omega_L$}}}%
     \put(0.55462155,0.02744418){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{Frequency}}}%
     \put(0.11618221,0.33435176){\color[rgb]{0,0,0}\makebox(0,0)[rb]{\smash{$0$}}}%
-    \put(0.11618216,0.39573327){\color[rgb]{0,0,0}\makebox(0,0)[rb]{\smash{$Z_{OPT}$}}}%
+    \put(0.11618216,0.39573327){\color[rgb]{0,0,0}\makebox(0,0)[rb]{\smash{$Z_{IN_{OPT}}$}}}%
     \put(0.02849428,0.36065812){\color[rgb]{0,0,0}\rotatebox{90}{\makebox(0,0)[b]{\smash{Impedance}}}}%
     \put(0.20211627,0.58338533){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$R_{IN}$}}}%
     \put(0.20211627,0.55357147){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$X_{IN}$}}}%
