@@ -245,3 +245,90 @@ by the sample.
 
 \begin{equation}\label{eq:thermal_noise}
 \end{equation}
+
+\subsection{Preamp Noise}
+Of the noise sources that we can control, the first amplifier in the signal processing chain is most critical. It's
+
+
+\subsubsection{Noise Factor}
+Noise factor (denoted by $F$) is a parameter that characterizes the noise performance of an amplifier (or mixer, or any other signal
+processing block).  It is defined as:
+
+\begin{equation}\label{eq:noise_factor}
+    F = \frac{\text{Total Output Noise Power}}{\text{Output Noise Power Due To Source}}
+\end{equation}
+
+In systems consisting of multiple blocks (preamplifier, analog filter, mixer, ADC..) it becomes useful to refer to the
+logarithm of $F$, so that the noise contribution of cascaded blocks can be represented as a sum. This logarithmic
+parameter is called noise figure:
+
+\begin{equation}\label{eq:noise_figure}
+    NF = 20 \log_{10}(F)
+\end{equation}
+
+\subsubsection{Two Port Noise Model}
+
+A two port model of a noisy amplifier is shown in figure \ref{fig:2port_noise}. The noise behavior of the amplifier is
+completely characterized by two input referenced noise sources: a voltage source with mean value $\bar{e}_n$, and a
+current source with with mean value $\bar{i}_n$.
+
+\begin{figure}
+    \centering
+    \input{figures/2port_noise.pdf_tex}
+    \caption{Two port noise model for amplifier with gain $G$.}
+    \label{fig:2port_noise}
+\end{figure}
+
+Connected to the input of the amplifier is a noise current source with input admittance $Y_S$ and mean value
+$\bar{i}_s$. The noise current is assumed to arise purely from the real part of $Y_S$, so the two are related by eq.
+\ref{eq:source_admittance}
+
+\begin{equation}\label{eq:source_admittance}
+    Re(Y_S) = G_S = \frac{\bar{i_s^2}}{4kT\Delta f}
+\end{equation}
+
+We assume that $\bar{i_s}$ statistically independent from $\bar{e_n}$ and $\bar{i_n}$, since they arise inside of
+physically distinct devices. Since $\bar{e_n}$ and $\bar{i_n}$ may arise inside of a single transistor, they cannot be
+assumed to be uncorrelated.
+
+Using the parameters of this model, we can begin to calculate the amplifier's noise figure. Since we only need to find
+the ratio between total noise power and source derived noise power, not the actual values themselves, we can use the
+short cut that output power will be proportional to short circuit mean square input current in both cases.
+
+\begin{equation}\label{eq:2port_noisefactor}
+    F = \frac{\overline{|i_s + i_n + Y_S e_n|^2}}{\bar{i_s^2}}
+\end{equation}
+
+If we expand the squared term in the numerator, we can get rid of cross terms between uncorrelated variables:
+
+\begin{equation}\label{eq:2port_noisefactor_2}
+    F = \frac{\bar{i_s^2} + \overline{|i_n + Y_S e_n|^2}}{\bar{i_s^2}}
+\end{equation}
+
+The next step is to break up $i_n$ into two parts: $i_{n_u}$ which is uncorrelated with $e_n$, and $i_{n_c}$ which is
+correlated to $e_n$. The correlation coefficient takes the form of a complex transadmittance $Y_C$, as it is a ratio between
+a current and a voltage.
+
+\begin{equation}\label{eq:cor_uncoor}
+    i_n = i_{n_u} + i_{n_c} = i_{n_u} + Y_C e_n
+\end{equation}
+
+Making this substitution and again removing uncorrelated cross terms, eq. \ref{eq:2port_noisefactor_2} becomes:
+
+\begin{equation}\label{eq:2port_noisefactor_3}
+    F = \frac{\bar{i_s^2} + \bar{i_u^2} + |Y_S + Y_C|^2 \bar{e_n^2}}{\bar{i_s^2}}
+\end{equation}
+
+\subsubsection{Admittance, Conductivity, and Susceptibility}
+Before beginning the next section, recall that just as a complex impedance $Z$ can be decomposed into its real
+resistance $R$ and imaginary reactance $X$, a complex admittance $Y$ may be decomposed into a conductivity $G$ and
+susceptibility $B$:
+
+\begin{equation}\label{eq:admittance}
+    \begin{aligned}
+        Z &= R + jX\\
+        Y &= G + jB
+    \end{aligned}
+\end{equation}
+
+\subsubsection{Optimal Source Impedance}
