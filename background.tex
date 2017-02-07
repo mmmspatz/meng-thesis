@@ -121,16 +121,6 @@ the main field $B_0$, the RF field $B_1$, and the linearly varying gradient fiel
     \uvec{k}}{T_1}
 \end{equation}
 
-\subsection{RF Excitation}
-In the previous section, we covered what happens when $\bvec{B} = B_0 \uvec{k}$; the steady state solution to the Bloch
-equation is $\bvec{M} = M_0 \uvec{k}$, where $M_0$ is as defined in eq. \ref{eq:M}.  Now consider the case where
-$\bvec{B}$ is as in eq. \ref{eq:B_rot}. A transverse component rotating at a frequncy $\omega_R$ and with time varying
-amplitude $B_1(t)$ has been added. 
-
-\begin{equation}\label{eq:B_rot}
-    \bvec{B} = B_0 \uvec{k} + B_1(t) \cdot (\cos(\omega_R t) \uvec{i} - \sin(\omega_R t)\uvec{j})
-\end{equation}
-
 \section{Signal Equation}
 The NMR signal arises from the precessing transverse component of the magnetization vector. As we begin to focus solely
 on $\bvec{M_{xy}}$, I will follow the convention used by Nishimura \cite{nishimura} and define a new variable $M$ that
@@ -180,7 +170,7 @@ $\bvec{B_0}$, $\bvec{G}$ varies as a function of space and time.
     \bvec{B} = (B_0 + G(\bvec{r},t))\uvec{k}
 \end{equation}
 
-After an initial flip resulting in a spatial magnetization distribution $M(\bvec{r},t=1)$, spins begin precess under the
+After an initial flip resulting in a spatial magnetization distribution $M(\bvec{r},t=0)$, spins begin precess under the
 influence of $G$, as described in \ref{eq:phase_enc}. After a time $t$, spins at a location $\bvec{r}$ have accrued
 excess phase in proportion to the time integral of $G(\bvec{r},t)$.
 
@@ -229,10 +219,10 @@ function with complex exponentials. Its one dimensional form is shown in eq. \re
 
 Strikingly, eqs. \ref{eq:signal_3} and \ref{eq:fourier_transform} look extremely similar. The effect of our carefully
 chosen linear gradient fields has been to set up a physical three dimensional Fourier transform, where we take the inner
-product of $M$ with a complex exponential. Manipulation of $G(t)$ allows us to visit and sample arbitrary coordinates $(k_x,k_y,k_z)$
-in so called "k-space".  By collecting k-space points on a cartesian grid and obeying certain sampling criteria, we can
-collect data that directly represents a spatial Fourier transform of the sample under test, weighted by $C(\bvec{r})$
-and $M(\bvec{r},t=0+)$.
+product of $M$ with a complex exponential whose phase has linear dependence on space. Manipulation of $G(t)$ allows us
+to visit and sample arbitrary coordinates $(k_x,k_y,k_z)$ in so called "k-space".  By collecting k-space points on a
+cartesian grid and obeying certain sampling criteria, we can collect data that directly represents a spatial Fourier
+transform of the sample under test, weighted by $C(\bvec{r})$ and $M(\bvec{r},t=0+)$.
 
 \section{Noise in MRI}
 \subsection{Thermal Noise}
@@ -244,11 +234,35 @@ strength of the coupling. If $R_{LOAD}$ is measurable, it can be used to quantif
 by the sample.
 
 \begin{equation}\label{eq:thermal_noise}
+    \bar{e_n^2} = 4 k T_{LOAD} R_{LOAD} \Delta f
+\end{equation}
+
+\subsubsection{Estimating $R_{LOAD}$}
+
+A current $I$ flowing in the loop creates a spatially varying magnetic field $\bvec{B_1}(\bvec{r})$ in the sample below it. If $I$
+is sinusoidal, then the changing $\bvec{B_1}$ will create an associated electric field $\bvec{E}$ according to Faraday's
+law of induction.
+
+\begin{equation}\label{eq:differential_faraday}
+    \nabla \times \bvec{E}(\bvec{r}) = - \frac{\partial \bvec{B_1}(\bvec{r})}{\partial t}
+\end{equation}
+
+If we can solve for this $\bvec{E}$, and if we know the conductivity of the sample, we can determine the power
+deposition in the sample and model it by $R_{LOAD}$.
+
+\begin{equation}\label{eq:P_sample}
+    P_{SAMPLE} = \frac{1}{2} \iiint_V \sigma |\bvec{E}(\bvec{r})|^2 d\bvec{r}
+\end{equation} 
+
+\begin{equation}
+    R_{LOAD} = \frac{P_{SAMPLE}}{\sqrt{I}} 
 \end{equation}
 
 \subsection{Preamp Noise}
-Of the noise sources that we can control, the first amplifier in the signal processing chain is most critical. It's
-
+Of the noise sources that we can control, the first amplifier in the signal processing chain is most critical. By
+faithfully amplifying the weak NMR signal early, the relative impact of noise injected by further transmission and
+processing steps is lessened. Here, I follow chapter 10.6 of \cite{lee2004} to derive an optimal source admittance that
+optimizes the noise performance of an amplifier.
 
 \subsubsection{Noise Factor}
 Noise factor (denoted by $F$) is a parameter that characterizes the noise performance of an amplifier (or mixer, or any other signal
@@ -275,7 +289,7 @@ current source with with mean value $\bar{i}_n$.
 \begin{figure}
     \centering
     \input{figures/2port_noise.pdf_tex}
-    \caption{Two port noise model for amplifier with gain $G$.}
+    \caption{Two port model of a noisy preamp connected to a noisy source.}
     \label{fig:2port_noise}
 \end{figure}
 
@@ -316,7 +330,7 @@ a current and a voltage.
 Making this substitution and again removing uncorrelated cross terms, eq. \ref{eq:2port_noisefactor_2} becomes:
 
 \begin{equation}\label{eq:2port_noisefactor_3}
-    F = \frac{\bar{i_s^2} + \bar{i_u^2} + |Y_S + Y_C|^2 \bar{e_n^2}}{\bar{i_s^2}}
+    F = 1 + \frac{\bar{i_u^2} + |Y_S + Y_C|^2 \bar{e_n^2}}{\bar{i_s^2}}
 \end{equation}
 
 \subsubsection{Admittance, Conductivity, and Susceptibility}
@@ -332,3 +346,31 @@ susceptibility $B$:
 \end{equation}
 
 \subsubsection{Optimal Source Impedance}
+There is an optimal value $Y_S$ that will minimize $F$. All that's left to do in finding it is to set up
+\ref{eq:2port_noisefactor} so that we can take derivatives with respect to $Y_S$ and set them equal to zero.
+
+Replace the admittances $Y_S$ and $Y_C$ with the corresponding conductivities and susceptibilities, then substitute
+$\bar{i_s^2} = G_S 4kT\Delta f$ in the denominator. eq. \ref{eq:2port_noisefactor_3} becomes:
+
+\begin{equation}\label{eq:2port_noisefactor_4}
+    F = 1 + \frac{\bar{i_u^2} + \big[(G_C+G_S)^2 + (B_C+B_S)^2\big] \bar{e_n^2}}{4kT \Delta f G_s}
+\end{equation}
+
+Minimize $F$ with respect to $B_S$:
+
+\begin{equation}\label{eq:partial_B_S}
+    \frac{\partial F}{\partial B_S} = \frac{(2 B_C + 2 B_S) \bar{e_n^2}}{4kT\Delta f G_S} \implies B_{S_{OPT}} = -B_C
+\end{equation}
+
+Then, minimize $F$ with respect to $G_S$ and plug in $B_{S_{OPT}}$:
+
+\begin{equation}\label{eq:partial_G_S}
+    \frac{\partial F}{\partial G_S} = -\frac{\bar{i_u^2} + \bar{e_n^2} \big[{G_C}^2 + (B_C+B_S)^2 \big]}{4kT\Delta f
+    {G_S}^2} + \frac{\bar{e_n^2}}{4 kT\Delta f} \implies G_{S_{OPT}} = \sqrt{\frac{\bar{i_u^2}}{\bar{e_n^2}} + G_C^2}
+\end{equation}
+
+We have found our optimal source impance $Y_{S_{OPT}}$.
+
+\begin{equation}\label{eq:y_opt}
+    Y_{S_{OPT}} =  \sqrt{\frac{\bar{i_u^2}}{\bar{e_n^2}} + G_C^2} - j B_C
+\end{equation}
