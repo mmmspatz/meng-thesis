@@ -2,7 +2,8 @@
 \newcommand{\bvec}[1]{\bm{\vec{#1}}}
 
 \chapter{Background}
-Magnetic resonance imaging is, as the name suggests, enabled by the phenomenon of magnetic resonance.
+In this chapter, I will lay out the basics of MR imaging and some of the considerations involved, loosely following
+themes in \cite{nishimura}.
 
 \section{Origin of MR signal}
 
@@ -193,7 +194,7 @@ If we constrain ourselves to linear encoding gradients, such that
     G(\bvec{r}=x\uvec{i} + y\uvec{j} + z\uvec{k},t) = G_x(t) x + G_x(t) y + G_z(t) z 
 \end{equation}
 
-and then define three $k$ variables to descbibe the history of $G$ along each axis:
+and then define three $k$ variables to describe the history of $G$ along each axis:
 
 \begin{equation}\label{k_space}
     \begin{aligned}
@@ -211,7 +212,7 @@ we come up with the final form of the signal equation:
 
 \subsection{The Fourier Transform}
 The Fourier transform breaks down a function into its individual frequency components by taking inner products of that
-function with complex exponentials. Its one dimensional form is shown in eq. \ref{eq:fourier_transform}.
+function with complex exponential. Its one dimensional form is shown in eq. \ref{eq:fourier_transform}.
 
 \begin{equation}\label{eq:fourier_transform}
     F(k_x) = \int_{-\infty}^{\infty} f(x)e^{-j2\pi k_x x} dx
@@ -221,7 +222,7 @@ Strikingly, eqs. \ref{eq:signal_3} and \ref{eq:fourier_transform} look extremely
 chosen linear gradient fields has been to set up a physical three dimensional Fourier transform, where we take the inner
 product of $M$ with a complex exponential whose phase has a linear dependence on space. Manipulation of $G(t)$ allows us
 to visit and sample arbitrary coordinates $(k_x,k_y,k_z)$ in so called "k-space".  By collecting k-space points on a
-cartesian grid and obeying certain sampling criteria, we can collect data that directly represents a spatial Fourier
+Cartesian grid and obeying certain sampling criteria, we can collect data that directly represents a spatial Fourier
 transform of the sample under test, weighted by $C(\bvec{r})$ and $M(\bvec{r},t=0+)$.
 
 \section{Noise in MRI}
@@ -338,7 +339,7 @@ Making this substitution and again removing uncorrelated cross terms, eq. \ref{e
 \subsubsection{Admittance, Conductivity, and Susceptibility}
 Before beginning the next section, recall that just as a complex impedance $Z$ can be decomposed into its real
 resistance $R$ and imaginary reactance $X$, a complex admittance $Y$ may be decomposed into a conductivity $G$ and
-susceptibility $B$:
+susceptance $B$:
 
 \begin{equation}\label{eq:admittance}
     \begin{aligned}
@@ -351,7 +352,7 @@ susceptibility $B$:
 There is an optimal value $Y_S$ that will minimize $F$. All that's left to do in finding it is to set up
 \ref{eq:2port_noisefactor_3} so that we can take derivatives with respect to $Y_S$ and set them equal to zero.
 
-Replace the admittances $Y_S$ and $Y_C$ with the corresponding conductivities and susceptibilities, then substitute
+Replace the admittances $Y_S$ and $Y_C$ with the corresponding conductivities and susceptances, then substitute
 $\bar{i_s^2} = G_S 4kT\Delta f$ in the denominator. eq. \ref{eq:2port_noisefactor_3} becomes:
 
 \begin{equation}\label{eq:2port_noisefactor_4}
@@ -371,7 +372,7 @@ Then, minimize $F$ with respect to $G_S$ and plug in $B_{S_{OPT}}$:
     {G_S}^2} + \frac{\bar{e_n^2}}{4 kT\Delta f} \implies G_{S_{OPT}} = \sqrt{\frac{\bar{i_u^2}}{\bar{e_n^2}} + G_C^2}
 \end{equation}
 
-We have found our optimal source impance $Y_{S_{OPT}}$.
+We have found our optimal source impedance $Y_{S_{OPT}}$.
 
 \begin{equation}\label{eq:y_opt}
     Y_{S_{OPT}} =  \sqrt{\frac{\bar{i_u^2}}{\bar{e_n^2}} + G_C^2} - j B_C
