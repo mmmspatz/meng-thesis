@@ -19,14 +19,14 @@ $\pm \gamma \frac{\hbar}{2}$ (eq. \ref{eq:dipole}).
 \end{equation}
 
 \subsection{Spins in the Presence of External Magnetic Fields}
-In the presence of a strong polarizing field pointing in the $\uvec{k}$ direction and with magnitude $B_0$, the
-potential energy of a spin with dipole moment $\bvec{\mu}$ is the dot product between the two vectors (eq.
-\ref{eq:spin_energy}). Because $\mu$ is quantized, there is a gap $\Delta E$ between realizable energy states (eq.
-\ref{eq:delta_E}).
+In the presence of a strong polarizing field $\bvec{B_0}$ pointing in the $z$ direction and with magnitude $B_0$, the
+potential energy of a spin with dipole moment $\bvec{\mu}$ is the dot product between the two vectors.
 
 \begin{equation}\label{eq:spin_energy}
     E = - \bvec{\mu} \cdot \bvec{B_0}
 \end{equation}
+
+Because $\mu$ is quantized, there is a gap $\Delta E$ between realizable energy states.
 
 \begin{equation}\label{eq:delta_E}
     \Delta E = \gamma \hbar B_0
@@ -97,7 +97,7 @@ a positive dependence on $B_0$ field strength.
 
 \subsubsection{Transverse Relaxation}
 Define the component of $\bvec{M}$ that is perpendicular to $\bvec{B_0}$ as $\bvec{M_{xy}}$. In equilibrium,
-$\bvec{M_{xy}} = 0$.  Immediately following the tipping of $\bvec{M}$ into the $x$-$y$ plane by an angle $\alpha$ at
+$\bvec{M_{xy}} = 0$.  Immediately following the tipping of $\bvec{M}$ onto the $x$ axis by an angle $\alpha$ at
 time $t=0$, $\bvec{M_{xy}}$ is as shown in eq. \ref{eq:mxy_postflip}. Individual spins begin to dephase as soon as they
 are tipped into the $x$-$y$ plane, and so the net transverse magnetization $\bvec{M_{xy}}$ experiences exponential
 decay, as shown in eq. \ref{eq:t2_decay}. The time constant associated with this transverse decay is termed $T_2$, and
@@ -114,7 +114,7 @@ is a property of the tissue or material being imaged.
 \subsection{Bloch Equation}
 Assembled together, the spin dynamics described above form the Bloch equation, shown in eq. \ref{eq:bloch}. The complete
 Bloch equation describes the behavior of spins in a generalized external magnetic field $\bvec{B}$ that is the sum of
-the main field $B_0$, the RF field $B_1$, and the linearly varying gradient fields $G$. 
+the main field $B_0$, the RF field $B_1$, and the spatially varying gradient fields $G$. 
 
 \begin{equation}\label{eq:bloch}
     \frac{d \bvec{M}}{dt} = \bvec{M} \times \gamma \bvec{B} - \frac{M_x \uvec{i} + M_y \uvec{j}}{T_2} - \frac{(M_z - M_0)
@@ -151,7 +151,7 @@ total voltage induced around the loop by summing the individual contributions fr
 
 The voltage around the loop depends on the time derivative of a volume integral over the entire sample volume. At this
 point, it is clear why only the precessing transverse magnetization is of interest for signal detection. Substituting
-our complex variable $M$ in eq. \ref{eq:reciprocity}, and replacing $\bvec{B_1}$ with a more general complex sensitivity
+our complex variable $M$ into eq. \ref{eq:reciprocity}, and replacing $\bvec{B_1}$ with a more general complex sensitivity
 function $C(\bvec{r})$ that also accounts for spatially dependent signal phase, we get the beginnings of the signal
 equation
 
@@ -219,7 +219,7 @@ function with complex exponentials. Its one dimensional form is shown in eq. \re
 
 Strikingly, eqs. \ref{eq:signal_3} and \ref{eq:fourier_transform} look extremely similar. The effect of our carefully
 chosen linear gradient fields has been to set up a physical three dimensional Fourier transform, where we take the inner
-product of $M$ with a complex exponential whose phase has linear dependence on space. Manipulation of $G(t)$ allows us
+product of $M$ with a complex exponential whose phase has a linear dependence on space. Manipulation of $G(t)$ allows us
 to visit and sample arbitrary coordinates $(k_x,k_y,k_z)$ in so called "k-space".  By collecting k-space points on a
 cartesian grid and obeying certain sampling criteria, we can collect data that directly represents a spatial Fourier
 transform of the sample under test, weighted by $C(\bvec{r})$ and $M(\bvec{r},t=0+)$.
@@ -230,12 +230,14 @@ The signals involved in MRI are very weak, and extreme care is taken to avoid an
 sources. Thermal noise arising inside the body is, however, unavoidable. When a perfectly conducting wire loop is
 brought near an object with finite conductivity, inductive coupling causes a transformed resistance $R_{LOAD}$ to appear
 in the loop. $R_{LOAD}$ depends on the geometry and conductivity of the object that is loading the loop, as well as the
-strength of the coupling. If $R_{LOAD}$ is measurable, it can be used to quantify the thermal noise that will be induced
-by the sample.
+strength of the coupling. If $R_{LOAD}$ is measurable, it can be used to quantify the thermal noise voltage that will be be
+detected.
 
 \begin{equation}\label{eq:thermal_noise}
     \bar{e_n^2} = 4 k T_{LOAD} R_{LOAD} \Delta f
 \end{equation}
+
+If all components of the MR setup are well designed, this innate noise source will dominate over all others.
 
 \subsubsection{Estimating $R_{LOAD}$}
 
@@ -294,7 +296,7 @@ current source with with mean value $\bar{i}_n$.
 \end{figure}
 
 Connected to the input of the amplifier is a noise current source with input admittance $Y_S$ and mean value
-$\bar{i}_s$. The noise current is assumed to arise purely from the real part of $Y_S$, so the two are related by eq.
+$\bar{i}_s$. The input noise current is assumed to arise purely from the real part of $Y_S$, so the two are related by eq.
 \ref{eq:source_admittance}
 
 \begin{equation}\label{eq:source_admittance}
@@ -320,7 +322,7 @@ If we expand the squared term in the numerator, we can get rid of cross terms be
 \end{equation}
 
 The next step is to break up $i_n$ into two parts: $i_{n_u}$ which is uncorrelated with $e_n$, and $i_{n_c}$ which is
-correlated to $e_n$. The correlation coefficient takes the form of a complex transadmittance $Y_C$, as it is a ratio between
+completely correlated to $e_n$. The correlation coefficient takes the form of a complex transadmittance $Y_C$, as it is a ratio between
 a current and a voltage.
 
 \begin{equation}\label{eq:cor_uncoor}
@@ -345,9 +347,9 @@ susceptibility $B$:
     \end{aligned}
 \end{equation}
 
-\subsubsection{Optimal Source Impedance}
+\subsubsection{Optimal Source Admittance}
 There is an optimal value $Y_S$ that will minimize $F$. All that's left to do in finding it is to set up
-\ref{eq:2port_noisefactor} so that we can take derivatives with respect to $Y_S$ and set them equal to zero.
+\ref{eq:2port_noisefactor_3} so that we can take derivatives with respect to $Y_S$ and set them equal to zero.
 
 Replace the admittances $Y_S$ and $Y_C$ with the corresponding conductivities and susceptibilities, then substitute
 $\bar{i_s^2} = G_S 4kT\Delta f$ in the denominator. eq. \ref{eq:2port_noisefactor_3} becomes:

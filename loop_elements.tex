@@ -8,14 +8,18 @@ Here, I will discuss the purpose and function of each part of this circuit.
 The loop is a resonant circuit that is strongly coupled to the volume surrounding it. It is necessary to spoil this
 resonance during the high power RF transmit pulses so that excessive currents are not induced in the loop. Such
 unintended energy deposition could adversely affect transmit homogeneity, damage the array, or create a safety hazard.
-This selective detuning is achieved by switching an inductor across one of the loop capacitors, creating a parallel
+Selective detuning is achieved by switching an inductor across one of the loop capacitors, creating a parallel
 resonant tank that behaves as an open circuit in the loop at $\omega_L$.
 
 A DC bias current of about $120mA$ is injected on the line marked BIAS in figure \ref{fig:loop_schematic}. This bias
 current flows through a PIN diode, $D_1$, creating an RF short and effectively switching $L_{TRAP}$ across $C_{S3}$.
-$L_{TRAP}$ is an adjustable air core inductor, and is hand tuned to resonate with $C_{S3}$ at precisely $\omega_L$. The 
-parallel resonant circuit thus formed creates a virtual open circuit in the loop, preventing current from flowing. As 
-soon as the bias current is removed and the diode recovers, the trap is disabled and the loop once again becomes tuned.
+$L_{TRAP}$ is an adjustable air core inductor, and is hand tuned to resonate with $C_{S3}$ at precisely $\omega_L$. The
+parallel resonant circuit thus formed creates a virtual open circuit in the loop, preventing current from circulating in
+the loop. As soon as the bias current is removed and the diode recovers, the trap is disabled and the loop once again
+becomes tuned.
+
+The bias current is injected through a bias tee formed by $L_{BIAS}$ and a $1nF$ capacitor to prevent leakage or
+injection of RF signal from/to the loop on the bias line.
 
 \section{Passive Detuning}
 The active detuning strategy is sufficient for assurance of image quality and protection from hardware damage, but a
@@ -35,7 +39,7 @@ array are all small enough that this was not necessary.
 The essence of the wire loop receive elements used in this array is a damped series resonant circuit, shown in figure
 \ref{fig:loop_model} A. The loop has a distributed inductance by nature of its geometry, and is broken at regular
 intervals by discrete capacitors.  Wire and component resistances and (more importantly) inductive coupling to adjacent
-conductive materials reduces the loop Q to a finite value. This effect is modelled by a series resistor with value
+conductive materials reduces the loop $Q$ to a finite value. This effect is modeled by a series resistor with value
 $R_{LOAD}=\sqrt{\frac{L}{C}}\cdot\frac{1}{Q}$
 
 \section{Complete Loop Circuit}
@@ -114,7 +118,7 @@ together, as defined in equation \ref{eq:preamp_decoupling_condition}.
 \end{equation}
 
 \subsection{Loop Resonance}
-I define loop resonance as occurring when $X_P + X_S = 0$, at a frequency of $\omega_0$ (eq. \ref{eq:w0}. In this case,
+I define loop resonance as occurring when $X_P + X_S = 0$, at a frequency of $\omega_0$ (eq. \ref{eq:w0}). In this case,
 the equations for $R_{IN}$ and $X_{IN}$ simplify to equations \ref{eq:R_IN_RES} and \ref{eq:X_IN_RES} respectively. One
 can begin to see how components could be selected to set $R_{IN}\big|_{\omega=\omega_0}=Re(Z_{IN_{OPT}})$, but with the
 topology we've selected it is impossible to achieve $X_{IN}\big|_{\omega=\omega_0}=0$. You could do both if you changed
@@ -153,7 +157,7 @@ Plugging eq. \ref{eq:CS_alpha} into eq. \ref{eq:R_IN}, then solving $R_{IN} = Z_
 
 \begin{equation} \label{eq:CP_alpha}
     C_P(\alpha,\omega_L) = \frac{1}{\omega_L}\sqrt{\frac{R_{LOAD}}{Z_{IN_{OPT}} ( {R_{LOAD}}^2 + (\alpha^2-1)^2 {\omega_L}^2
-    {L_{LOOP}}^2}}
+    {L_{LOOP}}^2)}}
 \end{equation}
 
 \subsubsection{Choosing $\alpha$ and $C_M$}
@@ -191,7 +195,7 @@ are shown in eq. \ref{eq:component_values}.
 
 \subsection{Verifying Optimal Component Values}
 Figure \ref{fig:impedance_plot} illustrates the success of this component selection strategy in simultaneously achieving
-optimum input impedance and preamp decoupling. The impedance plots shown are based on estimated parameters of a loop in
+optimal input impedance and preamp decoupling. The impedance plots shown are based on estimated parameters of a loop in
 the belly panel. Numerical values for this simulation are summarized in tables \ref{tab:sim_independent} and
 \ref{tab:sim_dependent}.
 
@@ -205,7 +209,7 @@ the belly panel. Numerical values for this simulation are summarized in tables \
 
 \begin{table}[]
 \centering
-\caption{Loop Simulation Parameters}
+\caption{Loop simulation parameters}
 \label{tab:sim_independent}
 \begin{tabular}{|l|l|}
 \hline
@@ -222,7 +226,7 @@ $\omega_L$ & $123.25MHz$ \\
 
 \begin{table}[]
 \centering
-\caption{Loop Simulation Component Values}
+\caption{Calculated optimal component values}
 \label{tab:sim_dependent}
 \begin{tabular}{|l|l|}
 \hline

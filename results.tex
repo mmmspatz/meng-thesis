@@ -37,7 +37,7 @@ color scale on these maps goes from $0.5$ to $1$, not $0$ to $1$.
 Figure \ref{fig:gfactor_cor_hf_rl} shows inverse SENSE g-factor maps for 2D acceleration in the head-foot and left-right
 directions, comparing array performance at $R=(3,4)$ and $R=(4,5)$. This comparison was chosen to highlight the best
 case improvement in acceleration capability provide by the fetal coil. Inside a large central ROI covering the entire
-fetus, the fetal coil maintains $g\le1.5$ with $R=4,5$ while the product array only achieves $g\le3.9$ In the same ROI,
+fetus, the fetal coil maintains $g\le1.5$ with $R=4,5$ while the product array only achieves $g\le3.9$. In the same ROI,
 they have mean inverse g-factors ($1/g$) of $0.82$ and $0.43$, respectively. Roughly speaking, the fetal coil has noise
 amplification levels at $R=(4,5)$ that are comparable to the standard array configuration at $R=(3,4)$. This represents
 a $67\%$ increase in overall acceleration factor.
@@ -91,7 +91,7 @@ a $67\%$ increase in overall acceleration factor.
 \section{Noise Matrices}
 Figure \ref{fig:noise_cov} shows the absolute value of a noise covariance matrix $\Psi$ calculated from this dataset.
 Figure \ref{fig:noise_cor} shows the same data normalized along the diagonal so that the element with indices $j,k$ is
-the correlation coefficient for channels $i$ and $k$. The correlation coefficient is equal to 1 when $j=k$.
+the correlation coefficient for channels $j$ and $k$. The correlation coefficient is equal to 1 when $j=k$.
 
 The average off diagonal correlation coefficient is $0.051$, and the maximum is $0.38$.
 
@@ -116,7 +116,7 @@ abdomen panel, and back panel.
 \section{Per-Element SNR}
 Figure \ref{fig:loop_snr_contributions} is a 1:4 scale diagram of the actual loop geometry used in the fetal array.
 Displayed inside each loop is the mean SNR of that channel inside the fetal brain ROI. It can be seen that elements in
-the back panel contributed mos to overall SNR in the fetal brain compartment, followed by the belly panel and side wings.
+the back panel contributed most to overall SNR in the fetal brain compartment, followed by the belly panel and side wings.
 
 \begin{figure}
 \makebox[\textwidth][c]{\includegraphics{figures/loop_snr_contributions.pdf}}
