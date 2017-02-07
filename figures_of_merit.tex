@@ -5,14 +5,15 @@ performance metrics: SNR maps and SENSE geometry factor (g-factor) maps. A brief
 complete treatment, see the original SENSE paper: \cite{Pruessmann1999}.
 
 \section{Signal to Noise Ratio Maps}
+
 In MRI, SNR is commonly defined as the ratio between signal amplitude and the standard deviation of noise. The MR signal
-to noise ratio provided by any coil or coil array varies as a function of space. A heatmap of SNR in a given plane is a
-useful visual tool that can be used to judge whether a coil is well suited to imaging in a particular region of interest
-such as the fetal brain or placenta. An SNR map is easy to generate for a single coil. One can simply run an imaging
-sequence with intrinsically high SNR twice; once with an initial RF excitation and once without. The first sequence
-should produce an image that is dominated by the MR signal, and the second sequence produces a noise only image. A SNR
-map in conventionally defined SNR units is obtained by dividing the first image by the standard deviation of the noise
-only image.
+to noise ratio provided by any coil or coil array varies as a function of space. A heatmap of SNR in absolute SNR units
+as defined by Kellman and McVeigh \cite{Kellman2005} in a given plane is a useful visual tool that can be used to judge
+whether a coil is well suited to imaging in a particular region of interest such as the fetal brain or placenta. An SNR
+map is easy to generate for a single coil. One can simply run an imaging sequence with intrinsically high SNR twice;
+once with an initial RF excitation and once without. The first sequence should produce an image that is dominated by the
+MR signal, and the second sequence produces a noise only image. A SNR map in conventionally defined SNR units is
+obtained by dividing the first image by the standard deviation of the noise only image.
 
 Generating SNR maps for multi coil arrays is less straightforward, and depends on the method used to combine data from
 individual elements. The Roemer paper \cite{Roemer90} describes an optimal way of combining array coil data in the

@@ -2,7 +2,8 @@
 
 The same basic loop circuit, shown in figure \ref{fig:loop_schematic}, is duplicated 64 times to create the full array.
 The components appearing inside the dashed green box exist on a small FR4 circuit board termed the "feed point board."
-Here, I will discuss the purpose and function of each part of this circuit.
+Here, I will discuss the purpose and function of each part of this circuit. All capacitors used in the loop circuit are
+Voltronics Series 11 non-magnetic.
 
 \section{Active Detuning}
 The loop is a resonant circuit that is strongly coupled to the volume surrounding it. It is necessary to spoil this
@@ -12,19 +13,20 @@ Selective detuning is achieved by switching an inductor across one of the loop c
 resonant tank that behaves as an open circuit in the loop at $\omega_L$.
 
 A DC bias current of about $120mA$ is injected on the line marked BIAS in figure \ref{fig:loop_schematic}. This bias
-current flows through a PIN diode, $D_1$, creating an RF short and effectively switching $L_{TRAP}$ across $C_{S3}$.
+current flows through a PIN diode $D_1$ (MACOM MA47461F-1072), creating an RF short and effectively switching $L_{TRAP}$ across $C_{S3}$.
 $L_{TRAP}$ is an adjustable air core inductor, and is hand tuned to resonate with $C_{S3}$ at precisely $\omega_L$. The
 parallel resonant circuit thus formed creates a virtual open circuit in the loop, preventing current from circulating in
 the loop. As soon as the bias current is removed and the diode recovers, the trap is disabled and the loop once again
-becomes tuned.
+becomes tuned. The $Q$ of this active detuning trap is kept high by using a relatively high value high Q inductor for
+$L_{TRAP}$. In this case, we used a $~60nH$ hand wound inductor made with 16 AWG enameled copper wire.
 
-The bias current is injected through a bias tee formed by $L_{BIAS}$ and a $1nF$ capacitor to prevent leakage or
+The bias current is injected through a bias tee formed by $L_{BIAS}$ ($3.3uH$ Coilcraft) and a $1nF$ capacitor to prevent leakage or
 injection of RF signal from/to the loop on the bias line.
 
 \section{Passive Detuning}
 The active detuning strategy is sufficient for assurance of image quality and protection from hardware damage, but a
 passive method is required to ensure patient safety in the event of an electrical failure. The crossed diode pair $D_2$
-clamps the voltage across $C_{S3}$ and $L_{TRAP}$ to safe levels, passively enabling the trap if the energy stored in
+(BAV99) clamps the voltage across $C_{S3}$ and $L_{TRAP}$ to safe levels, passively enabling the trap if the energy stored in
 the loop gets too high. Other designs might also include RF fuses in the loop circuit, but the loops employed in this
 array are all small enough that this was not necessary.
 
@@ -37,16 +39,16 @@ array are all small enough that this was not necessary.
 
 \section{Loop Model}
 The essence of the wire loop receive elements used in this array is a damped series resonant circuit, shown in figure
-\ref{fig:loop_model} A. The loop has a distributed inductance by nature of its geometry, and is broken at regular
+\ref{fig:loop_model}A. The loop has a distributed inductance by nature of its geometry, and is broken at regular
 intervals by discrete capacitors.  Wire and component resistances and (more importantly) inductive coupling to adjacent
 conductive materials reduces the loop $Q$ to a finite value. This effect is modeled by a series resistor with value
 $R_{LOAD}=\sqrt{\frac{L}{C}}\cdot\frac{1}{Q}$
 
 \section{Complete Loop Circuit}
-Figure \ref{fig:loop_model} B shows the creation of an output port in the loop circuit. The total loop capacitance is
+Figure \ref{fig:loop_model}B shows the creation of an output port in the loop circuit. The total loop capacitance is
 split into $C_P$, across which the output port is formed, and $C_S$. A series capacitor $C_M$ is added to one terminal
 of the output port. In the first part of the following analysis, grouping components values into the block impedances
-defined in eq. \ref{eq:block_impedances} and fig. \ref{fig:loop_model} C results in clearer and more compact
+defined in eq. \ref{eq:block_impedances} and fig. \ref{fig:loop_model}C results in clearer and more compact
 expressions, so I have made that substitution.
 
 \begin{figure}
